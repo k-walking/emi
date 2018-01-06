@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">FittnessApp1</string>
+    <string name="str_category_name">Sportart</string>
+    <string name="str_duration">Dauer</string>
+    <string name="str_quantity">Anzahl</string>
+    <string name="str_id">ID</string>
+    <string name="str_btn_ok">OK</string>
+</resources>
