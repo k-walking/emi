@@ -1,6 +1,6 @@
 package de.logcat.viktor.fittnessapp1;
 
-import java.awt.Image;
+import android.media.Image;
 
 public class DiagramBuilder {
 

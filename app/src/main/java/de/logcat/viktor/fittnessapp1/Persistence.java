@@ -1,5 +1,7 @@
 package de.logcat.viktor.fittnessapp1;
 
+import android.media.Image;
+
 import java.util.ArrayList;
 
 public class Persistence {
@@ -14,7 +16,7 @@ public class Persistence {
         // TODO
     }
 
-    public static void saveProgressDiagrams(Category category, Image durationProgressDiagram, Image quantityProgressDiagram) {
+    public static void saveProgressDiagrams(SportCategory category, Image durationProgressDiagram, Image quantityProgressDiagram) {
         // TODO
     }
 

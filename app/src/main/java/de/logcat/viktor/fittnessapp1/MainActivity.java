@@ -7,8 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.util.ArrayList;
-
 public class MainActivity extends AppCompatActivity {
     public final static String PAR_KEY = "package de.logcat.viktor.testpassdata.par";
 
@@ -50,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                         Integer.parseInt(etId.getText().toString()));
 
                 //ceating an Intent to opne theTargetViewActivity
-                Intent intent = new Intent(getBaseContext(), TargetViewActivity.class);
+                Intent intent = new Intent(getBaseContext(), TargetViewB02.class);
 
                 //passing data as a parcelable objact to StudentViewActivity
                 intent.putExtra("target", target);

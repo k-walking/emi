@@ -11,7 +11,7 @@ import android.widget.TextView;
  * Created by 0 on 05.01.2018.
  */
 
-public class TargetViewActivity extends Activity {
+public class TargetViewB02 extends Activity {
 
     TextView tvCategoryName;
     TextView tvDuration;
