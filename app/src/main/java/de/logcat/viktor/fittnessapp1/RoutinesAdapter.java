@@ -47,7 +47,7 @@ public class RoutinesAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View itemView = convertView;
+       /** View itemView = convertView;
         itemView = (itemView == null) ? inflater.inflate(R.layout.activity_routines, null): itemView;
         TextView textViewName = (TextView) itemView.findViewById(R.id.textViewName);
         TextView textViewAuthor = (TextView) itemView.findViewById(R.id.textViewAuthor);
@@ -55,7 +55,7 @@ public class RoutinesAdapter extends BaseAdapter {
         Book selectedBook = addedBooksList.get(position);
         textViewName.setText(selectedBook.getBookName());
         textViewAuthor.setText(selectedBook.getAuthor());
-        textViewPublish.setText(selectedBook.getPublishTime());
-        return itemView;
+        textViewPublish.setText(selectedBook.getPublishTime());*/
+        return null;
     }
 }

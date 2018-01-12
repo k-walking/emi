@@ -31,7 +31,7 @@ public class TargetViewB02 extends Activity {
 
         //Create adapter
         ArrayAdapter<String> arrayAdapter =
-                new ArrayAdapter<String>(this ,android.R.layout.simple_list_item_1, target.getCategoryName());
+                new ArrayAdapter<String>(getApplicationContext() ,android.R.layout.simple_list_item_1, target.getCategory().getName());
         //set the Adapter
         sportCategoryList.setAdapter(arrayAdapter);
 
@@ -42,7 +42,7 @@ public class TargetViewB02 extends Activity {
         tvId = (TextView)findViewById(R.id.d_id);
 
         if(target != null) {
-            tvCategoryName.setText("Name: "+target.getCategoryName());
+            tvCategoryName.setText("Name: "+target.getCategory().getName());
             tvDuration.setText("Name: "+target.getDuration());
             tvQuantity.setText("Name: "+target.getQuantity());
             tvId.setText("Name: "+target.getId());
