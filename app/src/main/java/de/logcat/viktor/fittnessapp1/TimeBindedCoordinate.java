@@ -11,15 +11,15 @@ public class TimeBindedCoordinate {
         this.timestamp = timestamp;
     }
 
-    public static double getLongitude {
+    public double getLongitude() {
         return longitude;
     }
 
-    public static double getLatitude {
+    public double getLatitude() {
         return latitude;
     }
 
-    public static int getTimestamp {
+    public int getTimestamp() {
         return timestamp;
     }
 }
