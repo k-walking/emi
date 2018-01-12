@@ -58,25 +58,37 @@ public class B02_TargetView extends Activity {
             // argument position gives the index of item which is clicked
             public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3)
             {
-                final Dialog dlg = new Dialog(B02_TargetView.this);
-                dlg.setContentView(R.layout.dialoglayout_target);
-                dlg.setTitle("Überschrift des Dialogs");
 
-                Button dlgButton = (Button) dlg.findViewById(R.id.buttonDlg);
-                dlgButton.setOnClickListener(new View.OnClickListener() {
+                openDialog("Wie viel " + SportCategory.getAllCategories().get(position).getUnit());
+                openDialog("Wie viel Zeit benötigst du? ");
 
-                    @Override
-                    public void onClick(View v) {
-                        dlg.hide();
-                    }
-                });
-                dlg.show();
-                String selectedmovie=categorynames.get(position);
-                Toast.makeText(getApplicationContext(), "Category Selected : "+selectedmovie,   Toast.LENGTH_LONG).show();
+                //String selectedmovie=categorynames.get(position);
+                //Toast.makeText(getApplicationContext(), "Category Selected : "+selectedmovie,   Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void openDialog(String question){
+        final Dialog dlg = new Dialog(B02_TargetView.this);
+
+
+
+        dlg.setContentView(R.layout.dialoglayout_target);
+        dlg.setTitle(question);
+
+        Button dlgButton = (Button) dlg.findViewById(R.id.buttonDlg);
+        dlgButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                dlg.hide();
             }
         });
 
-
+        //https://stackoverflow.com/questions/10996479/how-to-update-a-textview-of-an-activity-from-another-class
+        TextView ed_targetQuestion = (TextView) findViewById(R.id.textViewTargetQuestion);
+        ed_targetQuestion.setText(question);
+        dlg.show();
     }
 
 

@@ -61,7 +61,7 @@ public class SportCategory implements Parcelable{
         return null;
     }
 
-    static ArrayList getAllCategories() {
+    static ArrayList<SportCategory> getAllCategories() {
         return categories;
     }
 
