@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class Target implements Parcelable {
 
-    private final SportCategory category = null; //TODO parcelable constructor
+    private final SportCategory category;
     private final double duration;
     private final double quantity;
     private final int id;
@@ -24,7 +24,7 @@ public class Target implements Parcelable {
 
     /**Constructor of target**/
     public Target(SportCategory category, double mDuration, double mQuantity, int id) {
-        //this.category = category;
+        this.category = category;
         duration = mDuration;
         quantity = mQuantity;
         this.id = id;
@@ -57,10 +57,7 @@ public class Target implements Parcelable {
      * **/
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-       // wrtie Sportcaetegory
-        dest.writeDouble(duration);
-        dest.writeDouble(quantity);
-        dest.writeInt(id);
+        dest.writeStringArray(new String[]  {this.id+"", this.category.getId()+"", this.duration+"", this.quantity+"" });
 
     }
 
@@ -70,10 +67,13 @@ public class Target implements Parcelable {
      * the object CREATOR
      * */
     private Target(Parcel in) {
-        //this.category = in.readString();
-        this.duration = in.readDouble();
-        this.quantity = in.readDouble();
-        this.id = in.readInt();
+        String[] data = new String[4];
+        in.readStringArray(data);
+
+        this.id = Integer.parseInt(data[0]);
+        this.category = SportCategory.getCategoryById(Integer.parseInt(data[1]));
+        this.duration = Double.parseDouble(data[2]);
+        this.quantity = Double.parseDouble(data[3]);
     }
 
     public static final Parcelable.Creator<Target> CREATOR = new Parcelable.Creator<Target>() {

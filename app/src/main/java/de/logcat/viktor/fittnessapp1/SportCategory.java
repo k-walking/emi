@@ -55,8 +55,23 @@ public class SportCategory implements Parcelable{
         return id;
     }
 
+    public static SportCategory getCategoryById(int id) {
+        for(int i = 0; i < categories.size(); i++)
+            if(categories.get(i).getId() == id) return categories.get(i);
+        return null;
+    }
+
     static ArrayList getAllCategories() {
         return categories;
+    }
+
+    static String[] getAllCategoryNames() {
+        String[] categoryNames = new String[categories.size()];
+        for(int i = 0; i < categories.size(); i++) {
+            categoryNames[i] = categories.get(i).getName();
+        }
+
+        return categoryNames;
     }
 
     static void initCategories(){

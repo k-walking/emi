@@ -8,12 +8,9 @@
     android:orientation="vertical">
 
 
-    <EditText
-        android:id="@+id/ed_category_name"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:hint="@string/str_category_name"/>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="180dp" />
 
     <EditText
         android:id="@+id/ed_duration"

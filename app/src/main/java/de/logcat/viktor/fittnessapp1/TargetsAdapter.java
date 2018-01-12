@@ -5,4 +5,6 @@ package de.logcat.viktor.fittnessapp1;
  */
 
 public class TargetsAdapter {
+
+
 }
