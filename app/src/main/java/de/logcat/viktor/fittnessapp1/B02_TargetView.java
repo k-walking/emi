@@ -1,10 +1,13 @@
 package de.logcat.viktor.fittnessapp1;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,6 +30,7 @@ public class B02_TargetView extends Activity {
     EditText ed_RoutineName;
     ListView lv_SportCategories;
     List<String> categorynames;
+    final Context mContext = this;
 
     Button btn_save;
 
@@ -53,44 +57,42 @@ public class B02_TargetView extends Activity {
         lv_SportCategories.setAdapter(arrayAdapter);
 
         // register onClickListener to handle click events on each item
-        lv_SportCategories.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
+        lv_SportCategories.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             // argument position gives the index of item which is clicked
-            public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3)
-            {
+            public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3) {
 
-                openDialog("Wie viel " + SportCategory.getAllCategories().get(position).getUnit());
-                openDialog("Wie viel Zeit benötigst du? ");
 
-                //String selectedmovie=categorynames.get(position);
-                //Toast.makeText(getApplicationContext(), "Category Selected : "+selectedmovie,   Toast.LENGTH_LONG).show();
+
+                if ("km" == SportCategory.getAllCategories().get(position).getUnit()) {
+                    TargetQuestionDialog.displayMessageTime_Kilometer(mContext, "Zielsetzung", "Eine Frage",
+                            new TargetQuestionDialog.TargetQuestionDialogListener() {
+                                @Override
+                                public void onClosed(String value) {
+
+
+
+                                }
+                            });
+                } else if("Stück" == SportCategory.getAllCategories().get(position).getUnit()) {
+                    TargetQuestionDialog.displayMessageTime_Amount(mContext, "Zielsetzung", "Eine Frage",
+                            new TargetQuestionDialog.TargetQuestionDialogListener() {
+                                @Override
+                                public void onClosed(String value) {
+
+                                }
+                            });
+                } else {
+                    TargetQuestionDialog.displayMessageTime(mContext, "Zielsetzung", "Eine Frage",
+                            new TargetQuestionDialog.TargetQuestionDialogListener() {
+                                @Override
+                                public void onClosed(String value) {
+
+                                }
+                            });
+                }
+
             }
         });
     }
-
-    private void openDialog(String question){
-        final Dialog dlg = new Dialog(B02_TargetView.this);
-
-
-
-        dlg.setContentView(R.layout.dialoglayout_target);
-        dlg.setTitle(question);
-
-        Button dlgButton = (Button) dlg.findViewById(R.id.buttonDlg);
-        dlgButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                dlg.hide();
-            }
-        });
-
-        //https://stackoverflow.com/questions/10996479/how-to-update-a-textview-of-an-activity-from-another-class
-        TextView ed_targetQuestion = (TextView) findViewById(R.id.textViewTargetQuestion);
-        ed_targetQuestion.setText(question);
-        dlg.show();
-    }
-
-
-
 }

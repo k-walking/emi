@@ -4,5 +4,8 @@
     <string name="str_duration">Dauer</string>
     <string name="str_quantity">Anzahl</string>
     <string name="str_id">ID</string>
+    <string name="str_kilometer">Wie viele Kilometer?</string>
+    <string name="str_time">Wie lange brauchst du?</string>
+    <string name="str_amount">Wie viel Stück?</string>
     <string name="str_btn_ok">OK</string>
 </resources>

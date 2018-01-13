@@ -28,9 +28,6 @@ public class Target implements Parcelable {
         duration = mDuration;
         quantity = mQuantity;
         this.id = id;
-
-
-
     }
 
     public SportCategory getCategory(){
@@ -49,19 +46,15 @@ public class Target implements Parcelable {
         return id;
     }
 
-
-
-
     /**
      * Storing the targetdata to Parcel object
      * **/
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeStringArray(new String[]  {this.id+"", this.category.getId()+"", this.duration+"", this.quantity+"" });
-
     }
 
-    /***
+    /**
      * Retriving Target Data from Parcel object
      * This constructor is invoked by th emethod createFromParcel(Parcel source) of
      * the object CREATOR

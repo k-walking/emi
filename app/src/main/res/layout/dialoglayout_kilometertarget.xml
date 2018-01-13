@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp" >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="20dp">
+
+
+        <TextView
+            android:id="@+id/tv_TargetQuestion"
+            android:layout_width="296dp"
+            android:layout_height="wrap_content"
+            android:text="@string/str_kilometer" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/ed_kilometer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Kilometer" />
+
+    <Button
+        android:id="@+id/buttonDlg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dialog schließen" />
+
+</LinearLayout>
