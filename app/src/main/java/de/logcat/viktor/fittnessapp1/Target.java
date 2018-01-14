@@ -13,8 +13,8 @@ import java.util.ArrayList;
 public class Target implements Parcelable {
 
     private final SportCategory category;
-    private final double duration;
-    private final double quantity;
+    private String duration;
+    private double quantity;
     private final int id;
 
     public int describeContents() {
@@ -23,7 +23,7 @@ public class Target implements Parcelable {
 
 
     /**Constructor of target**/
-    public Target(SportCategory category, double mDuration, double mQuantity, int id) {
+    public Target(SportCategory category, String mDuration, double mQuantity, int id) {
         this.category = category;
         duration = mDuration;
         quantity = mQuantity;
@@ -38,7 +38,16 @@ public class Target implements Parcelable {
         return quantity;
     }
 
-    public double getDuration() {
+    public void  setQuantity(double quantity) {
+        this.quantity =  quantity;
+    }
+
+    public void  setDuration(String duration) {
+        this.duration =  duration;
+    }
+
+
+    public String getDuration() {
         return duration;
     }
 
@@ -65,7 +74,7 @@ public class Target implements Parcelable {
 
         this.id = Integer.parseInt(data[0]);
         this.category = SportCategory.getCategoryById(Integer.parseInt(data[1]));
-        this.duration = Double.parseDouble(data[2]);
+        this.duration = data[2];
         this.quantity = Double.parseDouble(data[3]);
     }
 

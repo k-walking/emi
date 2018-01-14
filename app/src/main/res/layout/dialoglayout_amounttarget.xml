@@ -31,10 +31,6 @@
         android:inputType="textPersonName"
         android:text="Anzahl" />
 
-    <Button
-        android:id="@+id/buttonDlg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Dialog schließen" />
+
 
 </LinearLayout>

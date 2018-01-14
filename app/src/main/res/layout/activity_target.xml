@@ -26,5 +26,25 @@
         android:layout_height="wrap_content"
         android:text="Speichern" />
 
+    <TextView
+        android:id="@+id/tv_target1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/tv_target2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="" />
+
+
+    <ListView
+        android:id="@+id/listViewTargets"
+        android:layout_width="fill_parent"
+        android:layout_height="231dp"
+        android:divider="#0000CC"
+        android:dividerHeight="0.1dp"/>
+
 
 </LinearLayout>
