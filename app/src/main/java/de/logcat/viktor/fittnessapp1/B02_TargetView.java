@@ -43,6 +43,8 @@ public class B02_TargetView extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_target);
 
+        btn_save = findViewById(R.id.btn_save);
+
         //getting a references to EditText of the layout file activity_main
         ed_RoutineName = (EditText)findViewById(R.id.ed_category_id);
 
@@ -90,7 +92,7 @@ public class B02_TargetView extends Activity {
                             public void onClosed3(double quantity) {
                                 target1.setQuantity(quantity);
                                 targets.add(target1);
-                                routine.addTarget(target1);
+                                //routine.addTarget(target1);
                             }
                         });
             } else if("Stück" == SportCategory.getAllCategories().get(position).getUnit()) {
@@ -104,7 +106,7 @@ public class B02_TargetView extends Activity {
                             public void onClosed3(double quantity) {
                                 target2.setQuantity(quantity);
                                 targets.add(target2);
-                                routine.addTarget(target2);
+                                //routine.addTarget(target2);
                             }
                         });
             } else {
@@ -118,21 +120,21 @@ public class B02_TargetView extends Activity {
                             public void onClosed4(double quantity) {
                                 target3.setQuantity(quantity);
                                 targets.add(target3);
-                                routine.addTarget(target3);
+                                //routine.addTarget(target3);
                             }
                         });
             }
             }
         });
 
-        targets = routine.getAllTargets();
+
 
         //set the Adapter
         TargetsList.setAdapter(new TargetListAdapter(this, targets));
 
         //save routine TODO routine class, store data
         btn_save.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+            public void onClick(View view) {
                 routineName = ed_RoutineName.getText().toString();
 
 
