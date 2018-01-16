@@ -17,34 +17,24 @@ import java.util.ArrayList;
 
 public class B01_RoutineView extends AppCompatActivity {
 
-
-
-    ArrayList<String> routineNamesList; //TODO create getRoutineNames in Routine
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_routines);
 
         SportCategory.initCategories();
 
-        ListView routinesList=(ListView)findViewById(R.id.listViewRoutines);
+        ListView routinesList = (ListView) findViewById(R.id.listViewRoutines);
+        Button addRoutines = (Button) findViewById(R.id.btn_addRoutine);
 
-        //get the reference of routines
-        routineNamesList = new ArrayList<String>();
-        getRoutineNames();
+        addRoutines.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent intent = new Intent(B01_RoutineView.this, B02_TargetView.class);
+                startActivity(intent);
+            }
+        });
 
-        //create Adapter
-        ArrayAdapter<String> arrayAdapter =
-                new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, routineNamesList);
-        // Set The Adapter
-        routinesList.setAdapter(arrayAdapter);
-
-    }
-
-    public static
-
-    void getRoutineNames(){
-
+        //set the Adapter
+        routinesList.setAdapter(new RoutinesAdapter(this, Routine.getAllRoutines()));
 
     }
 }

@@ -30,8 +30,7 @@ public class B02_TargetView extends Activity {
     EditText ed_RoutineName;
     TextView tv_target1;
     ListView lv_SportCategories;
-    List<String> categorynames;
-    ArrayList<Target> targets = new ArrayList<Target>();
+    List<String> categorynames = null;
     Routine routine;
     final Context mContext = this;
     String routineName;
@@ -43,15 +42,22 @@ public class B02_TargetView extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_target);
 
+        routine = new Routine();
+
         btn_save = findViewById(R.id.btn_save);
 
         //getting a references to EditText of the layout file activity_main
-        ed_RoutineName = (EditText)findViewById(R.id.ed_category_id);
+        ed_RoutineName = (EditText)findViewById(R.id.ed_RoutineName);
 
         //ListView Sportcategories
         SportCategory.initCategories();
         lv_SportCategories = (ListView) findViewById(R.id.listViewSportCategories);
+        if(categorynames != null) {
+            return;
+        }
+
         categorynames = Arrays.asList(SportCategory.getAllCategoryNames());
+
 
         //get th reference of SportCategory
         ListView sportCategoryList = (ListView)findViewById(R.id.listViewSportCategories);
@@ -91,8 +97,7 @@ public class B02_TargetView extends Activity {
 
                             public void onClosed3(double quantity) {
                                 target1.setQuantity(quantity);
-                                targets.add(target1);
-                                //routine.addTarget(target1);
+                                routine.addTarget(target1);
                             }
                         });
             } else if("Stück" == SportCategory.getAllCategories().get(position).getUnit()) {
@@ -105,8 +110,7 @@ public class B02_TargetView extends Activity {
 
                             public void onClosed3(double quantity) {
                                 target2.setQuantity(quantity);
-                                targets.add(target2);
-                                //routine.addTarget(target2);
+                                routine.addTarget(target2);
                             }
                         });
             } else {
@@ -119,25 +123,25 @@ public class B02_TargetView extends Activity {
 
                             public void onClosed4(double quantity) {
                                 target3.setQuantity(quantity);
-                                targets.add(target3);
-                                //routine.addTarget(target3);
+                                routine.addTarget(target3);
                             }
                         });
             }
             }
         });
 
-
-
         //set the Adapter
-        TargetsList.setAdapter(new TargetListAdapter(this, targets));
+        TargetsList.setAdapter(new TargetListAdapter(this, routine.getAllTargets()));
 
         //save routine TODO routine class, store data
         btn_save.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 routineName = ed_RoutineName.getText().toString();
+                routine.setName(routineName);
+                Persistence.save(routine);
 
-
+                Intent intent = new Intent(B02_TargetView.this, B01_RoutineView.class);
+                startActivity(intent);
             }
         });
 

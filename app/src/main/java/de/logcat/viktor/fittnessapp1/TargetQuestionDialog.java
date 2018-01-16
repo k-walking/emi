@@ -14,6 +14,11 @@ import java.util.ArrayList;
  */
 
 public class TargetQuestionDialog {
+    private static AlertDialog.Builder builder ;
+    private static LayoutInflater inflater;
+    private static View dialogViewTime;
+    private static View dialogViewAmount;
+
     public interface TargetQuestionDialogListener{
         public void onClosed(String time);
         public void onClosed4(double repeats);
@@ -29,12 +34,45 @@ public class TargetQuestionDialog {
         public void onClosed2(double amount);
     }
 
+    public static void openDialogAmount(final TargetAmountQuestionDialogListener listener){
+        final EditText ed_time1 = (EditText)dialogViewTime.findViewById(R.id.ed_time);
+
+        listener.onClosed(ed_time1.getText().toString());
+
+        builder.setView(dialogViewAmount);
+        builder.
+                setCancelable(false).
+                setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(listener != null) {
+                            dialog.dismiss();
+
+                            //TODO get user input
+                            final EditText ed_amount1 = (EditText)dialogViewAmount.findViewById(R.id.ed_amount);
+                            listener.onClosed2(Double.parseDouble(ed_amount1.getText().toString()));
+                        }
+
+                        dialog.cancel();
+
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        builder.show();
+    }
+
     //Dialog questioning for amount unit
     public static AlertDialog displayMessageTime_Amount(Context context, String title, String message, final TargetAmountQuestionDialogListener listener) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        final LayoutInflater inflater = LayoutInflater.from(context);
-        final View dialogViewTime = inflater.inflate(R.layout.dialoglayout_timetarget, null);
-        final View dialogViewAmount = inflater.inflate(R.layout.dialoglayout_amounttarget, null);
+
+        builder = new AlertDialog.Builder(context);
+        inflater = LayoutInflater.from(context);
+        dialogViewTime= inflater.inflate(R.layout.dialoglayout_timetarget, null);
+        dialogViewAmount = inflater.inflate(R.layout.dialoglayout_amounttarget, null);
 
         builder.setTitle(title);
         builder.setMessage(message);
@@ -48,35 +86,9 @@ public class TargetQuestionDialog {
 
                         if(listener != null) {
                             //get UserInput
-                            final EditText ed_time1 = (EditText)dialogViewTime.findViewById(R.id.ed_time);
 
-                            listener.onClosed(ed_time1.getText().toString());
+                            openDialogAmount(listener);
 
-                            builder.setView(dialogViewAmount);
-                            builder.
-                                    setCancelable(false).
-                                    setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            if(listener != null) {
-                                                dialog.dismiss();
-
-                                                //TODO get user input
-                                                final EditText ed_amount1 = (EditText)dialogViewAmount.findViewById(R.id.ed_amount);
-                                                listener.onClosed2(Double.parseDouble(ed_amount1.getText().toString()));
-                                            }
-
-                                            dialog.cancel();
-
-                                        }
-                                    })
-                                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                            builder.show();
                         }
                         dialog.cancel();
                     }

@@ -7,47 +7,6 @@
     android:orientation="vertical"
     >
 
-
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="180dp" />
-
-    <EditText
-        android:id="@+id/ed_category_id"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:hint="@string/str_duration"/>
-
-    <EditText
-        android:id="@+id/ed_duration"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:hint="@string/str_duration"/>
-
-
-    <EditText
-        android:id="@+id/ed_quantity"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:hint="@string/str_quantity"/>
-
-
-    <EditText
-        android:id="@+id/ed_id"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:hint="@string/str_id"/>
-
-    <Button
-        android:id="@+id/btn_ok"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/str_btn_ok"/>
-
     <ListView
         android:id="@+id/listViewRoutines"
         android:layout_width="368dp"
@@ -55,7 +14,12 @@
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="159dp" >
 
-
-
     </ListView>
+
+    <Button
+        android:id="@+id/btn_addRoutine"
+        android:layout_width="71dp"
+        android:layout_height="63dp"
+        android:background="@android:drawable/ic_input_add"
+        android:backgroundTint="#00bb66" />
 </LinearLayout>
