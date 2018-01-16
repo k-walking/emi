@@ -31,10 +31,10 @@ public class B02_TargetView extends Activity {
     TextView tv_target1;
     ListView lv_SportCategories;
     List<String> categorynames;
-    ListView lv_Targets;
-    ArrayList<String> targetnames = new ArrayList<String>();
     ArrayList<Target> targets = new ArrayList<Target>();
+    Routine routine;
     final Context mContext = this;
+    String routineName;
 
     Button btn_save;
 
@@ -42,8 +42,6 @@ public class B02_TargetView extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_target);
-
-
 
         //getting a references to EditText of the layout file activity_main
         ed_RoutineName = (EditText)findViewById(R.id.ed_category_id);
@@ -58,11 +56,13 @@ public class B02_TargetView extends Activity {
 
         //Create Sportcategories adapter
         ArrayAdapter<String> arrayAdapter =
-                new ArrayAdapter<String>(this ,android.R.layout.simple_list_item_1, Arrays.asList(SportCategory.getAllCategoryNames()) );
+                new ArrayAdapter<String>(this ,android.R.layout.simple_list_item_1, Arrays.asList(SportCategory.getAllCategoryNames()));
+
         //set the Adapter
         lv_SportCategories.setAdapter(arrayAdapter);
 
-
+        //get th reference of Targets
+        final ListView TargetsList = (ListView)findViewById(R.id.listViewTargets);
 
 
 
@@ -72,69 +72,72 @@ public class B02_TargetView extends Activity {
             // argument position gives the index of item which is clicked
             public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3) {
 
-                //Target
-                final SportCategory i = SportCategory.getAllCategories().get(position);
+            final SportCategory i = SportCategory.getAllCategories().get(position);
+            final Target target1 = new Target(i, "", 0 ,0);
+            final Target target2 = new Target(i, "", 0 ,0);
+            final Target target3 = new Target(i, "", 0 ,0);
 
-                final Target target1 = new Target(i, "13234", 0 ,0);
-                //show soecific dialog for different units in Target
-                if ("km" == SportCategory.getAllCategories().get(position).getUnit()) {
-                    TargetQuestionDialog.displayMessageTime_Kilometer(mContext, "Zielsetzung", "",
-                            new TargetQuestionDialog.TargetKilometerQuestionDialogListener(){
+            //show soecific dialog for different units in Target
+            if ("km" == SportCategory.getAllCategories().get(position).getUnit()) {
+                TargetQuestionDialog.displayMessageTime_Kilometer(mContext, "Zielsetzung", "",
+                        new TargetQuestionDialog.TargetKilometerQuestionDialogListener(){
 
-                                @Override
-                                public void onClosed(String time) {
-                                    String categoryName = target1.getCategory().getName();
-                                    target1.setDuration(time);
-                                    TextView tv_target = (TextView)findViewById(R.id.tv_target1);
-                                    tv_target.setText(time);
-                                    targetnames.add(categoryName);
-                                }
+                            @Override
+                            public void onClosed(String time) {
+                                target1.setDuration(time);
+                            }
 
-                                public void onClosed2(double kilometer) {
-                                    TextView target2 = (TextView)findViewById(R.id.tv_target2);
-                                    target2.setText(Double.toString(kilometer));
-                                    target1.setQuantity(kilometer);
-                                    targets.add(target1);
-                                }
-                            });
-                } else if("Stück" == SportCategory.getAllCategories().get(position).getUnit()) {
-                    TargetQuestionDialog.displayMessageTime_Amount(mContext, "Zielsetzung", "",
-                            new TargetQuestionDialog.TargetAmountQuestionDialogListener(){
-                                @Override
-                                public void onClosed(String time) {
+                            public void onClosed3(double quantity) {
+                                target1.setQuantity(quantity);
+                                targets.add(target1);
+                                routine.addTarget(target1);
+                            }
+                        });
+            } else if("Stück" == SportCategory.getAllCategories().get(position).getUnit()) {
+                TargetQuestionDialog.displayMessageTime_Kilometer(mContext, "Zielsetzung", "",
+                        new TargetQuestionDialog.TargetKilometerQuestionDialogListener(){
+                            @Override
+                            public void onClosed(String time) {
+                                target2.setDuration(time);
+                            }
 
-                                }
+                            public void onClosed3(double quantity) {
+                                target2.setQuantity(quantity);
+                                targets.add(target2);
+                                routine.addTarget(target2);
+                            }
+                        });
+            } else {
+                TargetQuestionDialog.displayMessageTime(mContext, "Zielsetzung", "",
+                        new TargetQuestionDialog.TargetQuestionDialogListener() {
+                            @Override
+                            public void onClosed(String time) {
+                                target3.setDuration(time);
+                            }
 
-                                public void onClosed2(double amount) {
+                            public void onClosed4(double quantity) {
+                                target3.setQuantity(quantity);
+                                targets.add(target3);
+                                routine.addTarget(target3);
+                            }
+                        });
+            }
+            }
+        });
 
-                                }
-                            });
-                } else {
-                    TargetQuestionDialog.displayMessageTime(mContext, "Zielsetzung", "",
-                            new TargetQuestionDialog.TargetQuestionDialogListener() {
-                                @Override
-                                public void onClosed(String time) {
+        targets = routine.getAllTargets();
 
-                                }
-                            });
-                }
+        //set the Adapter
+        TargetsList.setAdapter(new TargetListAdapter(this, targets));
 
+        //save routine TODO routine class, store data
+        btn_save.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                routineName = ed_RoutineName.getText().toString();
 
 
             }
         });
-        //ListView Targets
-        SportCategory cat = new SportCategory("Laufen", "kilometer");
-        Target target2 = new Target(cat, "dadw", 44, 2);
 
-        targets.add(target2);
-        //get th reference of Targets
-        final ListView TargetsList = (ListView)findViewById(R.id.listViewTargets);
-
-        //Create Targets adapter
-        ArrayAdapter<String> arrayAdapter2 =
-                new ArrayAdapter<String>(this ,android.R.layout.simple_list_item_1, targetnames );
-        //set the Adapter
-        TargetsList.setAdapter(new TargetListAdapter(this, targets));
     }
 }

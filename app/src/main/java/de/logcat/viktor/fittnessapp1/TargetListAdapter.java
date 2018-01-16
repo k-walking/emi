@@ -39,6 +39,7 @@ public class TargetListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         ViewHolder holder;
         if(convertView == null) {
             convertView = layoutInflater.inflate(R.layout.target_list_row, null);
@@ -46,9 +47,11 @@ public class TargetListAdapter extends BaseAdapter {
             holder.targetCategoryView = (TextView) convertView.findViewById(R.id.targetCategoryName);
             holder.targetQuantityView = (TextView) convertView.findViewById(R.id.targetQuantity);
             holder.targetDurationView = (TextView) convertView.findViewById(R.id.targetDuration);
+            convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+
 
         holder.targetCategoryView.setText(targetsD.get(position).getCategory().getName());
         holder.targetDurationView.setText(targetsD.get(position).getDuration());
