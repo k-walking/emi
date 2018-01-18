@@ -14,13 +14,12 @@
         android:typeface="sans" />
 
     <Button
-        android:id="@+id/routineDelete"
+        android:id="@+id/btn_delete_routine"
         android:layout_width="46dp"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:background="@android:drawable/ic_delete"
         android:backgroundTint="#00bb66"
-        android:text="X"
         android:textColor="#666666"
         android:textSize="16sp" />
 

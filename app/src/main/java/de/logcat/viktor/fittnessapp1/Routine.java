@@ -12,9 +12,8 @@ import java.util.ArrayList;
 public class Routine implements Parcelable {
     private String name;
     private final ArrayList<Target> routineTargets = new ArrayList<>();
-    private static ArrayList<Routine> routines = new ArrayList<>();
+    private static ArrayList<Routine> routines = Persistence.loadRoutines();;
     private final int id;
-
 
     public void addTarget(Target target) {
         routineTargets.add(target);

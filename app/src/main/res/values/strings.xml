@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FittnessApp1</string>
+    <string name="app_name">SuperFitMe</string>
     <string name="str_category_name">Sportart</string>
     <string name="str_duration">Dauer</string>
     <string name="str_quantity">Anzahl</string>
@@ -10,4 +10,7 @@
     <string name="str_amount">Wie viel Stück?</string>
     <string name="str_btn_ok">OK</string>
     <string name="str_btn_add">Hinzufügen</string>
+    <string name="hello_blank_fragment">Hinzufügen</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
 </resources>

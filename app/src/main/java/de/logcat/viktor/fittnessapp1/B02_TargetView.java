@@ -27,14 +27,13 @@ import java.util.List;
 
 public class B02_TargetView extends Activity {
 
-    EditText ed_RoutineName;
-    TextView tv_target1;
-    ListView lv_SportCategories;
-    List<String> categorynames = null;
-    Routine routine;
     final Context mContext = this;
+    List<String> categoryNames;
+    Routine routine;
     String routineName;
 
+    EditText ed_RoutineName;
+    ListView lv_SportCategories;
     Button btn_save;
 
     @Override
@@ -44,52 +43,34 @@ public class B02_TargetView extends Activity {
 
         routine = new Routine();
 
+        //get layout resources: save button,  routine name text, category list, targets list
+        final ListView TargetsList = (ListView)findViewById(R.id.lv_Targets);
         btn_save = findViewById(R.id.btn_save);
-
-        //getting a references to EditText of the layout file activity_main
         ed_RoutineName = (EditText)findViewById(R.id.ed_RoutineName);
-
-        //ListView Sportcategories
-        SportCategory.initCategories();
         lv_SportCategories = (ListView) findViewById(R.id.listViewSportCategories);
-        if(categorynames != null) {
-            return;
-        }
+        categoryNames = Arrays.asList(SportCategory.getAllCategoryNames());
 
-        categorynames = Arrays.asList(SportCategory.getAllCategoryNames());
-
-
-        //get th reference of SportCategory
-        ListView sportCategoryList = (ListView)findViewById(R.id.listViewSportCategories);
-
-        //Create Sportcategories adapter
+        //Create sport categories adapter and set to list view
         ArrayAdapter<String> arrayAdapter =
                 new ArrayAdapter<String>(this ,android.R.layout.simple_list_item_1, Arrays.asList(SportCategory.getAllCategoryNames()));
-
-        //set the Adapter
         lv_SportCategories.setAdapter(arrayAdapter);
 
-        //get th reference of Targets
-        final ListView TargetsList = (ListView)findViewById(R.id.listViewTargets);
-
-
-
-        // register onClickListener to handle click events on each item
+        //register onClickListener to handle click events on each item
         lv_SportCategories.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             // argument position gives the index of item which is clicked
             public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3) {
 
-            final SportCategory i = SportCategory.getAllCategories().get(position);
-            final Target target1 = new Target(i, "", 0 ,0);
-            final Target target2 = new Target(i, "", 0 ,0);
-            final Target target3 = new Target(i, "", 0 ,0);
+            //get clicked sport category and make new targets to store input data
+            final SportCategory currentCategory = SportCategory.getAllCategories().get(position);
+            final Target target1 = new Target(currentCategory, "", 0 ,0);
+            final Target target2 = new Target(currentCategory, "", 0 ,0);
+            final Target target3 = new Target(currentCategory, "", 0 ,0);
 
-            //show soecific dialog for different units in Target
+            //show specific dialog for different unit-cases
             if ("km" == SportCategory.getAllCategories().get(position).getUnit()) {
                 TargetQuestionDialog.displayMessageTime_Kilometer(mContext, "Zielsetzung", "",
                         new TargetQuestionDialog.TargetKilometerQuestionDialogListener(){
-
                             @Override
                             public void onClosed(String time) {
                                 target1.setDuration(time);
@@ -130,20 +111,18 @@ public class B02_TargetView extends Activity {
             }
         });
 
-        //set the Adapter
+        //set the targets view adapter
         TargetsList.setAdapter(new TargetListAdapter(this, routine.getAllTargets()));
 
-        //save routine TODO routine class, store data
+        //save routine and finish activity TODO routine class, store data
         btn_save.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 routineName = ed_RoutineName.getText().toString();
                 routine.setName(routineName);
-                Persistence.save(routine);
 
-                Intent intent = new Intent(B02_TargetView.this, B01_RoutineView.class);
-                startActivity(intent);
+                Persistence.save(routine);
+                finish();
             }
         });
-
     }
 }

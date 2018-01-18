@@ -16,6 +16,10 @@ public class SportCategory implements Parcelable{
     private static ArrayList<SportCategory> categories = new ArrayList<SportCategory>();
     private final String unit;
 
+    static {
+        initCategories();
+    }
+
     public SportCategory(String name, String unit) {
         this.name = name;
         this.unit = unit;
@@ -27,8 +31,7 @@ public class SportCategory implements Parcelable{
         name = in.readString();
         id = in.readInt();
         unit = in.readString();
-
-
+        categories.add(this);
     }
 
     public static final Creator<SportCategory> CREATOR = new Creator<SportCategory>() {
@@ -75,6 +78,7 @@ public class SportCategory implements Parcelable{
     }
 
     static void initCategories(){
+
         new SportCategory("Laufen", "km");
         new SportCategory("Liegestütze", "Stück");
         new SportCategory("Wandsitzen", null);

@@ -25,7 +25,7 @@ public class Persistence {
     // === load ====
 
     public static ArrayList<Routine> loadRoutines() {
-        return null; // TODO
+        return new ArrayList<Routine>(); // TODO
     }
 
     public static ArrayList<Execution> loadExecutions() {
