@@ -30,7 +30,6 @@ public class B01_RoutineView extends SlideMenu {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+(mDrawerList==null));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_routines);
 
