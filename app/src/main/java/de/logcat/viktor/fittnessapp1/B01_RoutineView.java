@@ -61,12 +61,6 @@ public class B01_RoutineView extends SlideMenu {
     public void updateRoutineList() {
         routinesList.setAdapter(new RoutinesAdapter(this, Routine.getAllRoutines()));
     }
-
-    public View findView(int s) {
-        return findViewById(s);
-    }
-
-
 }
 
 

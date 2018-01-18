@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +59,18 @@ public abstract class SlideMenu extends AppCompatActivity{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selectItemFromDrawer(position);
+                Intent intent = null;
+                finish();
+                if(position == 0){
+                    intent = new Intent(SlideMenu.this, B01_RoutineView.class);
+                }else if(position == 1){
+                    intent = new Intent(SlideMenu.this, B03_CalendarView.class);
+                }else if(position == 2){
+                    intent = new Intent(SlideMenu.this, B03_CalendarView.class);
+                }else  {
+                    Toast.makeText(getApplicationContext(), position, Toast.LENGTH_LONG).show();
+                }
+                startActivity(intent);
             }
         });
 
@@ -81,8 +95,6 @@ public abstract class SlideMenu extends AppCompatActivity{
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
     }
-
-    public abstract View findView(int id);
 
     //nav item
     public class NavItem {
