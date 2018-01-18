@@ -95,4 +95,8 @@ public class SportCategory implements Parcelable{
         dest.writeInt(id);
         dest.writeString(unit);
     }
+
+    public boolean hasQuanitityParameter() {
+        return unit != null;
+    }
 }

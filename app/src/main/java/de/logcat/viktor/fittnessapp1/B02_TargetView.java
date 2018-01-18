@@ -63,35 +63,22 @@ public class B02_TargetView extends Activity {
 
             //get clicked sport category and make new targets to store input data
             final SportCategory currentCategory = SportCategory.getAllCategories().get(position);
-            final Target target1 = new Target(currentCategory, "", 0 ,0);
-            final Target target2 = new Target(currentCategory, "", 0 ,0);
-            final Target target3 = new Target(currentCategory, "", 0 ,0);
+            final Target target = new Target(currentCategory, "", 0 ,0);
+
+            SportCategory sportCategory = SportCategory.getAllCategories().get(position);
 
             //show specific dialog for different unit-cases
-            if ("km" == SportCategory.getAllCategories().get(position).getUnit()) {
+            if (currentCategory.hasQuanitityParameter()) {
                 TargetQuestionDialog.displayMessageTime_Kilometer(mContext, "Zielsetzung", "",
                         new TargetQuestionDialog.TargetKilometerQuestionDialogListener(){
                             @Override
                             public void onClosed(String time) {
-                                target1.setDuration(time);
+                                target.setDuration(time);
                             }
 
                             public void onClosed3(double quantity) {
-                                target1.setQuantity(quantity);
-                                routine.addTarget(target1);
-                            }
-                        });
-            } else if("Stück" == SportCategory.getAllCategories().get(position).getUnit()) {
-                TargetQuestionDialog.displayMessageTime_Kilometer(mContext, "Zielsetzung", "",
-                        new TargetQuestionDialog.TargetKilometerQuestionDialogListener(){
-                            @Override
-                            public void onClosed(String time) {
-                                target2.setDuration(time);
-                            }
-
-                            public void onClosed3(double quantity) {
-                                target2.setQuantity(quantity);
-                                routine.addTarget(target2);
+                                target.setQuantity(quantity);
+                                routine.addTarget(target);
                             }
                         });
             } else {
@@ -99,12 +86,12 @@ public class B02_TargetView extends Activity {
                         new TargetQuestionDialog.TargetQuestionDialogListener() {
                             @Override
                             public void onClosed(String time) {
-                                target3.setDuration(time);
+                                target.setDuration(time);
                             }
 
                             public void onClosed4(double quantity) {
-                                target3.setQuantity(quantity);
-                                routine.addTarget(target3);
+                                target.setQuantity(quantity);
+                                routine.addTarget(target);
                             }
                         });
             }
