@@ -46,6 +46,7 @@ public class B03_CalendarView extends SlideMenu {
             }
         });
 
+
         addRoutine.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 RoutineDateDialog.displayMessageRoutinesList(mContext, "Zielsetzung", "",
@@ -54,11 +55,8 @@ public class B03_CalendarView extends SlideMenu {
                             public void onClosed(Routine routine) {
 
                             }
-
                         });
             }
         });
-
-        routinesList.setAdapter(new RoutinesAdapter(this, Routine.getAllRoutines(), true));
     }
 }

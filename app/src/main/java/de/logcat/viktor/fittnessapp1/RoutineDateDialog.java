@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ListView;
 
 
 /**
@@ -24,6 +25,10 @@ public class RoutineDateDialog {
         builder = new AlertDialog.Builder(context);
         inflater = LayoutInflater.from(context);
         dialogViewRoutines = inflater.inflate(R.layout.dialoglayout_routinedate, null);
+
+        ListView listView = (ListView) dialogViewRoutines.findViewById(R.id.listViewRoutines);
+        listView.setAdapter(new RoutinesAdapter(context,  false));
+
 
         builder.setTitle(title);
         builder.setMessage(message);
@@ -50,4 +55,9 @@ public class RoutineDateDialog {
         builder.show();
         return builder.create();
     }
+
+
+
+
+
 }

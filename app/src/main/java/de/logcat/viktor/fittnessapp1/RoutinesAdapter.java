@@ -17,13 +17,11 @@ import java.util.ArrayList;
 
 public class RoutinesAdapter extends BaseAdapter {
     Activity context;
-    ArrayList<Routine> addedRoutinesList;
     private static LayoutInflater inflater = null;
     private final SlideMenu routineView;
     private final boolean hasDelete;
 
-    public RoutinesAdapter(Context context, ArrayList<Routine> addedRoutinesList, boolean hasDelete) {
-        this.addedRoutinesList = addedRoutinesList;
+    public RoutinesAdapter(Context context, boolean hasDelete) {
         inflater = LayoutInflater.from(context);
         this.routineView = (SlideMenu) context;
         this.hasDelete = hasDelete;
@@ -31,12 +29,12 @@ public class RoutinesAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return addedRoutinesList.size();
+        return Routine.getAllRoutines().size();
     }
 
     @Override
     public Routine getItem(int position) {
-        return addedRoutinesList.get(position);
+        return Routine.getAllRoutines().get(position);
     }
 
     @Override
@@ -46,7 +44,7 @@ public class RoutinesAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-
+        routineView.updateRoutineList();
         ViewHolder holder;
         if(convertView == null) {
             convertView = inflater.inflate(hasDelete ? R.layout.routine_list_row : R.layout.routinedate_list_row, null);
@@ -63,13 +61,11 @@ public class RoutinesAdapter extends BaseAdapter {
                 });
             }
             convertView.setTag(holder);
-            routineView.updateRoutineList();
-
         } else {
             holder = (RoutinesAdapter.ViewHolder) convertView.getTag();
         }
 
-        holder.routineNameView.setText(addedRoutinesList.get(position).getName());
+        holder.routineNameView.setText(Routine.getAllRoutines().get(position).getName());
         return convertView;
     }
 
