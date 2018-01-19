@@ -12,19 +12,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-    <CalendarView
-        android:id="@+id/calendarView"
-        android:layout_width="wrap_content"
-        android:layout_height="342dp"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="16dp" />
+        <CalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="wrap_content"
+            android:layout_height="342dp"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="16dp" />
 
-    <Button
-        android:id="@+id/btn_addRoutine"
-        android:layout_width="71dp"
-        android:layout_height="63dp"
-        android:background="@android:drawable/ic_input_add"
-        android:backgroundTint="#00bb66" />
+        <Button
+            android:id="@+id/btn_addRoutine"
+            android:layout_width="55dp"
+            android:layout_height="63dp"
+            android:background="@android:drawable/ic_input_add"
+            android:backgroundTint="#00bb66" />
+
+        <ListView
+            android:id="@+id/listViewExecutions"
+            android:layout_width="238dp"
+            android:layout_height="336dp"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="159dp">
+
+        </ListView>
+
     </LinearLayout>
     <!-- The navigation drawer -->
     <RelativeLayout

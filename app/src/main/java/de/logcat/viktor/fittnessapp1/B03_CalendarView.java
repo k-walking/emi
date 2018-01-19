@@ -20,7 +20,7 @@ public class B03_CalendarView extends SlideMenu {
     final Context mContext = this;
     CalendarView simpleCalendarView;
     Button addRoutine;
-    ListView routinesList;
+    ListView routinesList, executionList;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +28,7 @@ public class B03_CalendarView extends SlideMenu {
         setContentView(R.layout.dialoglayout_routinedate);
         routinesList = (ListView) findViewById(R.id.listViewRoutines);
         setContentView(R.layout.activity_calendar);
-
+        executionList = (ListView) findViewById(R.id.listViewExecutions);
         afterCreate();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -53,10 +53,13 @@ public class B03_CalendarView extends SlideMenu {
                         new RoutineDateDialog.RoutinesDialogListener(){
                             @Override
                             public void onClosed(Routine routine) {
-
+                                new Execution(routine.getId(), null);
+                                executionList.setAdapter(new ExecutionAdatpter(B03_CalendarView.this));
                             }
                         });
             }
         });
+
+
     }
 }

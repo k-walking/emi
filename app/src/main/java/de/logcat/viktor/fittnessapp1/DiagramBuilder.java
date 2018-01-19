@@ -44,13 +44,13 @@ public class DiagramBuilder {
     }
 
     private static double[][] execsToDataPoints(Execution[] execs) {
-        long min_x = execs[0].getExecutiontime().getTime(), max_x = min_x;
+        //long min_x = execs[0].getExecutiontime().getTime(), max_x = min_x;
         double min_y = execs[0].getmQuantity(), max_y = min_y;
 
         double[][] dataPoints = new double[execs.length][2];
         int i = 0;
         for(Execution exec : execs) {
-            dataPoints[i][1] = (exec.getExecutiontime().getTime() - min_x)/(max_x-min_x);
+            //dataPoints[i][1] = (exec.getExecutiontime().getTime() - min_x)/(max_x-min_x);
             dataPoints[i][0] = (exec.getmQuantity() - min_y)/(max_y-min_y);
             i++;
         }

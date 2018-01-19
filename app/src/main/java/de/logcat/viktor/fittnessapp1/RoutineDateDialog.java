@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 
@@ -28,6 +29,14 @@ public class RoutineDateDialog {
 
         ListView listView = (ListView) dialogViewRoutines.findViewById(R.id.listViewRoutines);
         listView.setAdapter(new RoutinesAdapter(context,  false));
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            // argument position gives the index of item which is clicked
+            public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3) {
+                listener.onClosed(Routine.getAllRoutines().get(position));
+            }
+        });
 
 
         builder.setTitle(title);
