@@ -9,10 +9,6 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 
-/**
- * Created by 0 on 13.01.2018.
- */
-
 public class TargetQuestionDialog {
     private static AlertDialog.Builder builder ;
     private static LayoutInflater inflater;
