@@ -14,22 +14,22 @@ import java.util.ArrayList;
  */
 
 public class TargetListAdapter extends BaseAdapter {
-    private ArrayList<Target> targetsD;
+    private Routine routine;
     private LayoutInflater layoutInflater;
 
-    public TargetListAdapter(Context aContext, ArrayList<Target> targetsD) {
-        this.targetsD = targetsD;
+    public TargetListAdapter(Context aContext, Routine routine) {
+        this.routine = routine;
         layoutInflater = LayoutInflater.from(aContext);
     }
 
     @Override
     public int getCount() {
-        return targetsD.size();
+        return routine.getAllTargets().size();
     }
 
     @Override
     public Object getItem(int position) {
-        return targetsD.get(position);
+        return routine.getAllTargets().get(position);
     }
 
     @Override
@@ -53,9 +53,9 @@ public class TargetListAdapter extends BaseAdapter {
         }
 
 
-        holder.targetCategoryView.setText(targetsD.get(position).getCategory().getName());
-        holder.targetDurationView.setText(targetsD.get(position).getDuration());
-        holder.targetQuantityView.setText(Double.toString(targetsD.get(position).getQuantity()));
+        holder.targetCategoryView.setText(routine.getAllTargets().get(position).getCategory().getName());
+        holder.targetDurationView.setText(routine.getAllTargets().get(position).getDuration());
+        holder.targetQuantityView.setText(Double.toString(routine.getAllTargets().get(position).getQuantity()));
         return convertView;
     }
 

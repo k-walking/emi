@@ -63,22 +63,38 @@ public class B02_TargetView extends Activity {
 
             //get clicked sport category and make new targets to store input data
             final SportCategory currentCategory = SportCategory.getAllCategories().get(position);
-            final Target target = new Target(currentCategory, "", 0 ,0);
-
-            SportCategory sportCategory = SportCategory.getAllCategories().get(position);
+            final Target target1 = new Target(currentCategory, "", 0 ,0);
+            final Target target2 = new Target(currentCategory, "", 0 ,0);
+            final Target target3 = new Target(currentCategory, "", 0 ,0);
 
             //show specific dialog for different unit-cases
-            if (currentCategory.hasQuanitityParameter()) {
+            if ("km" == SportCategory.getAllCategories().get(position).getUnit()) {
                 TargetQuestionDialog.displayMessageTime_Kilometer(mContext, "Zielsetzung", "",
                         new TargetQuestionDialog.TargetKilometerQuestionDialogListener(){
                             @Override
                             public void onClosed(String time) {
-                                target.setDuration(time);
+                                target1.setDuration(time);
                             }
 
                             public void onClosed3(double quantity) {
-                                target.setQuantity(quantity);
-                                routine.addTarget(target);
+                                target1.setQuantity(quantity);
+                                routine.addTarget(target1);
+                                TargetsList.setAdapter(new TargetListAdapter(mContext, routine));
+                            }
+                        });
+            } else if("Stück" == SportCategory.getAllCategories().get(position).getUnit()) {
+                TargetQuestionDialog.displayMessageTime_Kilometer(mContext, "Zielsetzung", "",
+                        new TargetQuestionDialog.TargetKilometerQuestionDialogListener(){
+                            @Override
+                            public void onClosed(String time) {
+                                target2.setDuration(time);
+                            }
+
+                            public void onClosed3(double quantity) {
+                                target2.setQuantity(quantity);
+                                routine.addTarget(target2);
+                                TargetsList.setAdapter(new TargetListAdapter(mContext, routine));
+
                             }
                         });
             } else {
@@ -86,12 +102,13 @@ public class B02_TargetView extends Activity {
                         new TargetQuestionDialog.TargetQuestionDialogListener() {
                             @Override
                             public void onClosed(String time) {
-                                target.setDuration(time);
+                                target3.setDuration(time);
                             }
 
                             public void onClosed4(double quantity) {
-                                target.setQuantity(quantity);
-                                routine.addTarget(target);
+                                target3.setQuantity(quantity);
+                                routine.addTarget(target3);
+                                TargetsList.setAdapter(new TargetListAdapter(mContext, routine));
                             }
                         });
             }
@@ -99,14 +116,15 @@ public class B02_TargetView extends Activity {
         });
 
         //set the targets view adapter
-        TargetsList.setAdapter(new TargetListAdapter(this, routine.getAllTargets()));
+
+
 
         //save routine and finish activity TODO routine class, store data
         btn_save.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 routineName = ed_RoutineName.getText().toString();
                 routine.setName(routineName);
-
+                System.out.println(">>>>>>>>>>>>>>>>>>>>>"+routine.getAllTargets().size());
                 Persistence.save(routine);
                 finish();
             }
