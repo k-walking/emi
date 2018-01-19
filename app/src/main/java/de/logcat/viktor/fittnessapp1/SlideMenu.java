@@ -144,4 +144,8 @@ public abstract class SlideMenu extends AppCompatActivity{
         super.onPostCreate(savedInstanceState);
         mDrawerToggle.syncState();
     }
+
+    public void updateRoutineList() {
+
+    }
 }

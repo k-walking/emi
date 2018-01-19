@@ -19,15 +19,15 @@ public class RoutinesAdapter extends BaseAdapter {
     Activity context;
     ArrayList<Routine> addedRoutinesList;
     private static LayoutInflater inflater = null;
-    private final B01_RoutineView routineView;
+    private final SlideMenu routineView;
+    private final boolean hasDelete;
 
-    public RoutinesAdapter(Context context, ArrayList<Routine> addedRoutinesList) {
+    public RoutinesAdapter(Context context, ArrayList<Routine> addedRoutinesList, boolean hasDelete) {
         this.addedRoutinesList = addedRoutinesList;
         inflater = LayoutInflater.from(context);
-        this.routineView = (B01_RoutineView) context;
+        this.routineView = (SlideMenu) context;
+        this.hasDelete = hasDelete;
     }
-
-
 
     @Override
     public int getCount() {
@@ -44,40 +44,37 @@ public class RoutinesAdapter extends BaseAdapter {
         return position;
     }
 
-
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
         ViewHolder holder;
         if(convertView == null) {
-            convertView = inflater.inflate(R.layout.routine_list_row, null);
+            convertView = inflater.inflate(hasDelete ? R.layout.routine_list_row : R.layout.routinedate_list_row, null);
             holder = new RoutinesAdapter.ViewHolder();
             holder.routineNameView = (TextView) convertView.findViewById(R.id.routineName);
-            holder.routineDeleteBtn = (Button) convertView.findViewById(R.id.btn_delete_routine);
-            holder.routineDeleteBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Routine.getAllRoutines().remove(position);
-                    routineView.updateRoutineList();
-                }
-            });
+            if(hasDelete){
+                holder.routineDeleteBtn = (Button) convertView.findViewById(R.id.btn_delete_routine);
+                holder.routineDeleteBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Routine.getAllRoutines().remove(position);
+                        routineView.updateRoutineList();
+                    }
+                });
+            }
             convertView.setTag(holder);
+            routineView.updateRoutineList();
+
         } else {
             holder = (RoutinesAdapter.ViewHolder) convertView.getTag();
         }
 
-
-
-
         holder.routineNameView.setText(addedRoutinesList.get(position).getName());
         return convertView;
-
     }
 
     static class ViewHolder {
         TextView routineNameView;
         Button routineDeleteBtn;
     }
-
 }
-
