@@ -1,4 +1,4 @@
-package de.logcat.viktor.fittnessapp1;
+package de.logcat.viktor.app;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

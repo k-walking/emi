@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".MainActivity">
 
 
     <ListView
@@ -16,33 +16,30 @@
         android:id="@+id/ed_duration"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
-        android:hint="@string/str_duration"/>
+        android:hint="@string/str_duration"
+        android:inputType="text" />
 
 
     <EditText
         android:id="@+id/ed_quantity"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
-        android:hint="@string/str_quantity"/>
+        android:hint="@string/str_quantity"
+        android:inputType="text" />
 
 
     <EditText
         android:id="@+id/ed_id"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
-        android:hint="@string/str_id"/>
+        android:hint="@string/str_id"
+        android:inputType="text" />
 
     <Button
         android:id="@+id/btn_ok"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/str_btn_ok"/>
-
-
-
+        android:hint="@string/str_btn_ok" />
 
 
 </android.support.v4.widget.DrawerLayout>

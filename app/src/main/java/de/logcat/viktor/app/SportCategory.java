@@ -1,10 +1,9 @@
-package de.logcat.viktor.fittnessapp1;
+package de.logcat.viktor.app;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 /**
  * Created by 0 on 05.01.2018.
@@ -94,6 +93,10 @@ public class SportCategory implements Parcelable{
         dest.writeString(name);
         dest.writeInt(id);
         dest.writeString(unit);
+    }
+
+    public String getQuantityQuestion() {
+        return "Wie viele "+getUnit()+"?";
     }
 
     public boolean hasQuanitityParameter() {

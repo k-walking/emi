@@ -1,6 +1,5 @@
-package de.logcat.viktor.fittnessapp1;
+package de.logcat.viktor.app;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,18 +8,15 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
-/**
- * Created by 0 on 19.01.2018.
- */
-
-public class ExecutionAdatpter extends BaseAdapter {
-    Activity context;
+public class RoutinesAdapter extends BaseAdapter {
     private static LayoutInflater inflater = null;
-    private final B03_CalendarView calendarView;
+    private final SlideMenu view;
+    private final boolean hasDelete;
 
-    public ExecutionAdatpter(Context context) {
+    public RoutinesAdapter(Context context, boolean hasDelete) {
         inflater = LayoutInflater.from(context);
-        this.calendarView = (B03_CalendarView) context;
+        this.view = (SlideMenu) context;
+        this.hasDelete = hasDelete;
     }
 
     @Override
@@ -40,32 +36,32 @@ public class ExecutionAdatpter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        ExecutionAdatpter.ViewHolder holder;
+        ViewHolder holder;
         if(convertView == null) {
-            convertView = inflater.inflate(R.layout.execution_list_row, null);
-            holder = new ExecutionAdatpter.ViewHolder();
-            holder.executionNameView = (TextView) convertView.findViewById(R.id.executionName);
-
-                holder.executionDeleteBtn = (Button) convertView.findViewById(R.id.btn_delete_execution);
-                holder.executionDeleteBtn.setOnClickListener(new View.OnClickListener() {
+            convertView = inflater.inflate(hasDelete ? R.layout.routine_list_row : R.layout.routinedate_list_row, null);
+            holder = new RoutinesAdapter.ViewHolder();
+            holder.routineNameView = (TextView) convertView.findViewById(R.id.routineName);
+            if(hasDelete){
+                holder.routineDeleteBtn = (Button) convertView.findViewById(R.id.btn_delete);
+                holder.routineDeleteBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Routine.getAllRoutines().remove(position);
-                        calendarView.updateRoutineList();
+                        view.updateRoutineList();
                     }
                 });
-
+            }
             convertView.setTag(holder);
         } else {
-            holder = (ExecutionAdatpter.ViewHolder) convertView.getTag();
+            holder = (RoutinesAdapter.ViewHolder) convertView.getTag();
         }
 
-        holder.executionNameView.setText(getItem(position).getName());
+        holder.routineNameView.setText(getItem(position).getName());
         return convertView;
     }
 
     static class ViewHolder {
-        TextView executionNameView;
-        Button executionDeleteBtn;
+        TextView routineNameView;
+        Button routineDeleteBtn;
     }
 }

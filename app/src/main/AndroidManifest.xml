@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="de.logcat.viktor.fittnessapp1">
+    package="de.logcat.viktor.app">
 
     <application
         android:allowBackup="true"
@@ -9,21 +9,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".B01_RoutineView">
+        <activity android:name="de.logcat.viktor.app.B01_RoutineView">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".B02_TargetView">
+        <activity android:name="de.logcat.viktor.app.B02_TargetView">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".B03_CalendarView">
+        <activity android:name="de.logcat.viktor.app.B03_CalendarView">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

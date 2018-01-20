@@ -16,18 +16,20 @@
 
 
         <TextView
-            android:id="@+id/tv_TargetQuestion"
+            android:id="@+id/tv_question"
             android:layout_width="296dp"
             android:layout_height="wrap_content"
-            android:text="@string/str_kilometer" />
+            android:text="question" />
 
     </LinearLayout>
 
     <EditText
-        android:id="@+id/ed_kilometer"
+        android:id="@+id/ed_answer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Kilometer" />
+        android:text="predefined answer"
+        android:textColorLink="#BBB" />
+
 </LinearLayout>

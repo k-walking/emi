@@ -9,7 +9,7 @@
         android:id="@+id/targetCategoryName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="dfsf"
+        android:text="category name"
         android:textStyle="bold"
         android:typeface="sans" />
 
@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/targetCategoryName"
-        android:text="sdfg"
+        android:text="duration"
         android:textColor="#ffffff"
         android:textSize="12sp" />
 
@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="34dp"
         android:layout_alignParentRight="true"
-        android:text="ergerg"
+        android:text="quantity"
         android:textColor="#ffffff"
         android:textSize="12sp" />
 

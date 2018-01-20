@@ -8,8 +8,8 @@
         android:id="@+id/listViewTargets"
         android:layout_width="fill_parent"
         android:layout_height="231dp"
-        android:divider="#0000CC"
+        android:divider="#444"
         android:dividerHeight="0.1dp"
-        android:visibility="visible"/>
+        android:visibility="visible" />
 
 </LinearLayout>

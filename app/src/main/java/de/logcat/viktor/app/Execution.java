@@ -1,10 +1,9 @@
-package de.logcat.viktor.fittnessapp1;
+package de.logcat.viktor.app;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by 0 on 06.01.2018.

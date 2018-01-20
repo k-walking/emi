@@ -1,4 +1,4 @@
-package de.logcat.viktor.fittnessapp1;
+package de.logcat.viktor.app;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,14 +7,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 /**
  * Created by 0 on 14.01.2018.
  */
 
 public class TargetListAdapter extends BaseAdapter {
-    private Routine routine;
+    private final Routine routine;
     private LayoutInflater layoutInflater;
 
     public TargetListAdapter(Context aContext, Routine routine) {
@@ -54,8 +52,8 @@ public class TargetListAdapter extends BaseAdapter {
 
 
         holder.targetCategoryView.setText(routine.getAllTargets().get(position).getCategory().getName());
-        holder.targetDurationView.setText(routine.getAllTargets().get(position).getDuration());
-        holder.targetQuantityView.setText(Double.toString(routine.getAllTargets().get(position).getQuantity()));
+        holder.targetDurationView.setText(Double.toString(routine.getAllTargets().get(position).getDuration()) + " min");
+        holder.targetQuantityView.setText(routine.getAllTargets().get(position).getCategory().getUnit() == null ? "" : Double.toString(routine.getAllTargets().get(position).getQuantity()) + " " + routine.getAllTargets().get(position).getCategory().getUnit());
         return convertView;
     }
 

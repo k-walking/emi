@@ -1,9 +1,7 @@
-package de.logcat.viktor.fittnessapp1;
+package de.logcat.viktor.app;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -18,11 +16,6 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
-
-/**
- * Created by 0 on 18.01.2018.
- */
 
 public abstract class SlideMenu extends AppCompatActivity{
     //burger menu
@@ -116,7 +109,7 @@ public abstract class SlideMenu extends AppCompatActivity{
 
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.mainContent, fragment)
+                .replace(R.id.layout_main, fragment)
                 .commit();
 
         mDrawerList.setItemChecked(position, true);

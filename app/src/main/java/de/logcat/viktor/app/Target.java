@@ -1,9 +1,7 @@
-package de.logcat.viktor.fittnessapp1;
+package de.logcat.viktor.app;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import java.util.ArrayList;
 
 
 /**
@@ -13,8 +11,8 @@ import java.util.ArrayList;
 public class Target implements Parcelable {
 
     private final SportCategory category;
-    private String duration;
-    private double quantity;
+    private double duration = 0;
+    private double quantity = 0;
     private final int id;
 
     public int describeContents() {
@@ -23,10 +21,10 @@ public class Target implements Parcelable {
 
 
     /**Constructor of target**/
-    public Target(SportCategory category, String mDuration, double mQuantity, int id) {
+    public Target(SportCategory category, double duration, double quantity, int id) {
         this.category = category;
-        duration = mDuration;
-        quantity = mQuantity;
+        duration = duration;
+        quantity = quantity;
         this.id = id;
     }
 
@@ -42,12 +40,12 @@ public class Target implements Parcelable {
         this.quantity =  quantity;
     }
 
-    public void  setDuration(String duration) {
+    public void  setDuration(double duration) {
         this.duration =  duration;
     }
 
 
-    public String getDuration() {
+    public double getDuration() {
         return duration;
     }
 
@@ -55,26 +53,18 @@ public class Target implements Parcelable {
         return id;
     }
 
-    /**
-     * Storing the targetdata to Parcel object
-     * **/
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeStringArray(new String[]  {this.id+"", this.category.getId()+"", this.duration+"", this.quantity+"" });
     }
 
-    /**
-     * Retriving Target Data from Parcel object
-     * This constructor is invoked by th emethod createFromParcel(Parcel source) of
-     * the object CREATOR
-     * */
     private Target(Parcel in) {
         String[] data = new String[4];
         in.readStringArray(data);
 
         this.id = Integer.parseInt(data[0]);
         this.category = SportCategory.getCategoryById(Integer.parseInt(data[1]));
-        this.duration = data[2];
+        this.duration = Double.parseDouble(data[2]);
         this.quantity = Double.parseDouble(data[3]);
     }
 

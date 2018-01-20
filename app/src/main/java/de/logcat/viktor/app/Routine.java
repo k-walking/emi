@@ -1,4 +1,4 @@
-package de.logcat.viktor.fittnessapp1;
+package de.logcat.viktor.app;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -24,7 +24,7 @@ public class Routine implements Parcelable {
     }
 
     public Routine() {
-        int highestId = -1;
+        int highestId = 0;
 
         for(int i = 0; i < routines.size(); i++)
             highestId = Math.max(highestId, routines.get(i).getId());
