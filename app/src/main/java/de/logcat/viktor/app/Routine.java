@@ -5,15 +5,20 @@ import android.os.Parcelable;
 
 import java.util.ArrayList;
 
-/**
- * Created by 0 on 05.01.2018.
- */
-
 public class Routine implements Parcelable {
+
     private String name;
     private final ArrayList<Target> routineTargets = new ArrayList<>();
     private static ArrayList<Routine> routines = Persistence.loadRoutines();;
     private final int id;
+
+    public static Routine findRoutine(int id) {
+        Routine routine;
+        for(int i = 0; i < Routine.getAllRoutines().size(); i++)
+            if((routine = Routine.getAllRoutines().get(i)).getId() == id)
+                return routine;
+        return null;
+    }
 
     public void addTarget(Target target) {
         routineTargets.add(target);

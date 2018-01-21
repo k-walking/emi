@@ -5,48 +5,9 @@ import android.os.Parcelable;
 
 import java.util.ArrayList;
 
-/**
- * Created by 0 on 06.01.2018.
- */
+public class Execution implements Parcelable {
 
-public class Execution implements Parcelable{
     private static final ArrayList<Execution> allExecutions = new ArrayList<Execution>();
-    private boolean isAlreadyExecutet;
-    private final Routine routine;
-    //private final Date executionTime; TODO
-    private double mDuration;
-    private double mQuantity;
-    private final int id;
-
-
-    public Execution(int routineId, String executionTime){
-        Routine foundRountine = null;
-
-        for(int i = 0; i < Routine.getAllRoutines().size(); i++) {
-            if(Routine.getAllRoutines().get(i).getId() == routineId ) {
-                foundRountine = Routine.getAllRoutines().get(i);
-
-                break;
-            }
-        }
-        int highestId = -1;
-
-        for(int i = 0; i < allExecutions.size(); i++)
-            highestId = Math.max(highestId, allExecutions.get(i).getId());
-
-        id = highestId+1;
-        allExecutions.add(this);
-        routine = foundRountine;
-        //this.executionTime = null;//TODO make Date
-    }
-
-    protected Execution(Parcel in) {
-        isAlreadyExecutet = in.readByte() != 0;
-        routine = in.readParcelable(Routine.class.getClassLoader());
-        mDuration = in.readDouble();
-        mQuantity = in.readDouble();
-        id = in.readInt();
-    }
 
     public static final Creator<Execution> CREATOR = new Creator<Execution>() {
         @Override
@@ -60,34 +21,28 @@ public class Execution implements Parcelable{
         }
     };
 
-    public int getId(){
-        return id;
+    private boolean isAlreadyExecuted;
+    private final Routine routine;
+    //private final Date executionTime; TODO
+    private double duration;
+    private double quantity;
+    private final int id;
+
+    public Execution(int routineId, String executionTime){
+
+        id = getNewId();
+        routine = Routine.findRoutine(routineId);
+        allExecutions.add(this);
+        //this.executionTime = null;//TODO make Date
     }
 
-    public double getDuration() {
-        return mDuration;
+    Execution(Parcel in) {
+        isAlreadyExecuted = in.readByte() != 0;
+        routine = in.readParcelable(Routine.class.getClassLoader());
+        duration = in.readDouble();
+        quantity = in.readDouble();
+        id = in.readInt();
     }
-
-    public double getmQuantity() {
-        return mQuantity;
-    }
-
-    //public Date getExecutiontime() {
-        //return executionTime;
-    //}
-
-    public Routine getRoutine() {
-        return routine;
-    }
-
-    public void setDuration(double mDuration) {
-        this.mDuration = mDuration;
-    }
-
-    public void setQuantity(double mQuantity) {
-        this.mQuantity = mQuantity;
-    }
-
 
     @Override
     public int describeContents() {
@@ -96,10 +51,49 @@ public class Execution implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeByte((byte) (isAlreadyExecutet ? 1 : 0));
+        dest.writeByte((byte) (isAlreadyExecuted ? 1 : 0));
         dest.writeParcelable(routine, flags);
-        dest.writeDouble(mDuration);
-        dest.writeDouble(mQuantity);
+        dest.writeDouble(duration);
+        dest.writeDouble(quantity);
         dest.writeInt(id);
+    }
+
+    public static ArrayList<Execution> getAllExecutions() {
+        return allExecutions;
+    }
+
+    private static int getNewId() {
+        int highestId = -1;
+        for(int i = 0; i < allExecutions.size(); i++)
+            highestId = Math.max(highestId, allExecutions.get(i).getId());
+        return highestId+1;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    /* public Date getExecutiontime() {
+        return executionTime;
+    } */
+
+    public Routine getRoutine() {
+        return routine;
+    }
+
+    public double getDuration() {
+        return duration;
+    }
+
+    public void setDuration(double duration) {
+        this.duration = duration;
+    }
+
+    public double getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(double quantity) {
+        this.quantity = quantity;
     }
 }

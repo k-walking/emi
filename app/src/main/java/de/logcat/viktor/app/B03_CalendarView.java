@@ -1,6 +1,5 @@
 package de.logcat.viktor.app;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,24 +8,24 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 public class B03_CalendarView extends SlideMenu {
-    final Context mContext = this;
-    CalendarView simpleCalendarView;
-    Button addRoutine;
-    ListView routinesList, executionList;
 
+    private CalendarView simpleCalendarView;
+    private Button addRoutine;
+    private ListView routinesList, executionList;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dialoglayout_routinedate);
-        routinesList = (ListView) findViewById(R.id.listViewRoutines);
+        setContentView(R.layout.pick_execution_dialog);
+        routinesList = findViewById(R.id.listViewRoutines);
 
         setContentView(R.layout.b03);
-        executionList = (ListView) findViewById(R.id.lv_executions);
+        executionList = findViewById(R.id.lv_executions);
+        executionList.setAdapter(new ExecutionAdapter(B03_CalendarView.this));
 
         afterCreate();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        addRoutine = (Button) findViewById(R.id.btn_add);
-        simpleCalendarView = (CalendarView) findViewById(R.id.calendar_view); // get the reference of CalendarView
+        addRoutine = findViewById(R.id.btn_add);
+        simpleCalendarView = findViewById(R.id.calendar_view); // get the reference of CalendarView
 
         simpleCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -38,17 +37,20 @@ public class B03_CalendarView extends SlideMenu {
 
         addRoutine.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-            RoutineDateDialog.displayMessageRoutinesList(mContext, "Zielsetzung", "",
-                new RoutineDateDialog.RoutinesDialogListener(){
+            RoutineDateDialog.openDialog(B03_CalendarView.this, "Zielsetzung", "",
+                new RoutineDateDialog.Listener() {
                     @Override
                     public void onClosed(Routine routine) {
                         new Execution(routine.getId(), null);
-                        executionList.setAdapter(new ExecutionAdatpter(B03_CalendarView.this));
+                        executionList.invalidateViews();
                     }
                 });
             }
         });
+    }
 
-
+    @Override
+    public void updateRoutineList() {
+        routinesList.invalidateViews();
     }
 }
