@@ -139,6 +139,5 @@ public abstract class SlideMenu extends AppCompatActivity{
     }
 
     public void updateRoutineList() {
-
     }
 }

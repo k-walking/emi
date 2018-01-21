@@ -7,26 +7,37 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 public class ExecutionAdapter extends BaseAdapter {
 
     private static LayoutInflater inflater = null;
     private final B03_CalendarView calendarView;
+    private Date date;
+    private ArrayList<Execution> currentExecutions;
 
     public ExecutionAdapter(Context context) {
         inflater = LayoutInflater.from(context);
         this.calendarView = (B03_CalendarView) context;
     }
 
+    public void setDate(Date date) {
+        this.date = date;
+        calendarView.updateExecutionList();
+    }
+
     @Override
     public int getCount() {
-        return Execution.getAllExecutions().size();
+        return currentExecutions.size();
     }
 
     @Override
     public Execution getItem(int position) {
-        return Execution.getAllExecutions().get(position);
+        return currentExecutions.get(position);
     }
 
     @Override
@@ -42,23 +53,36 @@ public class ExecutionAdapter extends BaseAdapter {
             holder = new ExecutionAdapter.ViewHolder();
             holder.executionNameView = (TextView) convertView.findViewById(R.id.executionName);
 
-                holder.executionDeleteBtn = (Button) convertView.findViewById(R.id.btn_delete_execution);
-                holder.executionDeleteBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Routine.getAllRoutines().remove(position);
-                        calendarView.updateRoutineList();
-                    }
-                });
+
 
             convertView.setTag(holder);
         } else {
             holder = (ExecutionAdapter.ViewHolder) convertView.getTag();
         }
+        holder.executionDeleteBtn = (Button) convertView.findViewById(R.id.btn_delete_execution);
+        holder.executionDeleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Execution.getAllExecutions().remove(getItem(position));
+
+                calendarView.updateExecutionList();
+            }
+        });
 
         holder.executionNameView.setText(getItem(position).getRoutine().getName());
         return convertView;
     }
+
+    public void update(){
+        currentExecutions = new ArrayList<Execution>();
+        for(int i = 0; i < Execution.getAllExecutions().size(); i++){
+            if(Execution.getAllExecutions().get(i).isOnDate(date)){
+                currentExecutions.add(Execution.getAllExecutions().get(i));
+            }
+        }
+    }
+
+
 
     static class ViewHolder {
         TextView executionNameView;

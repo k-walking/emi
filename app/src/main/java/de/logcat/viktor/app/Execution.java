@@ -3,7 +3,10 @@ package de.logcat.viktor.app;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Execution implements Parcelable {
 
@@ -23,25 +26,26 @@ public class Execution implements Parcelable {
 
     private boolean isAlreadyExecuted;
     private final Routine routine;
-    //private final Date executionTime; TODO
+    private final Date executionTime; //TODO
     private double duration;
     private double quantity;
     private final int id;
 
-    public Execution(int routineId, String executionTime){
-
+    public Execution(int routineId, Date executionTime){
         id = getNewId();
         routine = Routine.findRoutine(routineId);
         allExecutions.add(this);
-        //this.executionTime = null;//TODO make Date
+        this.executionTime = executionTime;
     }
 
     Execution(Parcel in) {
+        id = in.readInt();
         isAlreadyExecuted = in.readByte() != 0;
         routine = in.readParcelable(Routine.class.getClassLoader());
         duration = in.readDouble();
         quantity = in.readDouble();
-        id = in.readInt();
+        executionTime = new Date(in.readLong());
+
     }
 
     @Override
@@ -51,11 +55,12 @@ public class Execution implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
         dest.writeByte((byte) (isAlreadyExecuted ? 1 : 0));
         dest.writeParcelable(routine, flags);
         dest.writeDouble(duration);
         dest.writeDouble(quantity);
-        dest.writeInt(id);
+        dest.writeLong(executionTime.getTime());
     }
 
     public static ArrayList<Execution> getAllExecutions() {
@@ -73,9 +78,15 @@ public class Execution implements Parcelable {
         return id;
     }
 
-    /* public Date getExecutiontime() {
+    public Date getExecutiontime() {
         return executionTime;
-    } */
+    }
+
+    public boolean isOnDate(Date date){
+        return date.getYear() == executionTime.getYear() &&
+                date.getMonth() == executionTime.getMonth() &&
+                date.getDate() == executionTime.getDate();
+    }
 
     public Routine getRoutine() {
         return routine;

@@ -28,13 +28,14 @@ public class RoutineDateDialog {
         builder.setView(dialogView);
         builder.setCancelable(false);
 
-        builder.show();
-        final AlertDialog dialog = builder.create();
+        final AlertDialog dialog = builder.show();
+        builder.create();
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3) {
                 dialog.dismiss();
-                dialog.cancel();
+
                 listener.onClosed(Routine.getAllRoutines().get(position));
             }
         });
