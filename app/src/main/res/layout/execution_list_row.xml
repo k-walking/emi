@@ -22,4 +22,15 @@
         android:backgroundTint="#00bb66"
         android:textColor="#666666"
         android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="46dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/executionName"
+        android:layout_toStartOf="@+id/btn_start"
+        android:background="@android:drawable/ic_media_play"
+        android:backgroundTint="#00bb66"
+        android:textColor="#666666"
+        android:textSize="16sp" />
 </RelativeLayout>

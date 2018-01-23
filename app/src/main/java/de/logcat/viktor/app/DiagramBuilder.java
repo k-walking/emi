@@ -7,7 +7,6 @@ import android.media.Image;
 
 public class DiagramBuilder {
 
-
     private static final int WIDTH = 400, HEIGHT = 400;
 
     public static Image buildRunningMap(TimeBindedCoordinate[] coords) {
@@ -44,7 +43,7 @@ public class DiagramBuilder {
     }
 
     private static double[][] execsToDataPoints(Execution[] execs) {
-        //long min_x = execs[0].getExecutiontime().getTime(), max_x = min_x;
+        /*//long min_x = execs[0].getExecutiontime().getTime(), max_x = min_x;
         double min_y = execs[0].getQuantity(), max_y = min_y;
 
         double[][] dataPoints = new double[execs.length][2];
@@ -56,7 +55,8 @@ public class DiagramBuilder {
         }
 
         dataPoints = quicksort(0, dataPoints.length-1, dataPoints);
-        return dataPoints;
+        return dataPoints;*/
+        return null;
     }
 
     private static double[][] quicksort(int low, int high, double[][] numbers) {

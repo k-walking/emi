@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import java.util.ArrayList;
 
-public class Routine implements Parcelable {
+public class Routine{
 
     private String name;
     private final ArrayList<Target> routineTargets = new ArrayList<>();
@@ -57,36 +57,5 @@ public class Routine implements Parcelable {
 
     static ArrayList<Routine> getAllRoutines() {
         return routines;
-    }
-
-
-    //static void initCategories()
-    protected Routine(Parcel in) {
-        String[] data = new String[1];
-        in.readStringArray(data);
-
-        this.id = Integer.parseInt(data[0]);
-    }
-
-    public static final Creator<Routine> CREATOR = new Creator<Routine>() {
-        @Override
-        public Routine createFromParcel(Parcel in) {
-            return new Routine(in);
-        }
-
-        @Override
-        public Routine[] newArray(int size) {
-            return new Routine[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeStringArray(new String[]  {this.id+""});
     }
 }

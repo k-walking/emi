@@ -2,6 +2,7 @@ package de.logcat.viktor.app;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,12 +61,21 @@ public class ExecutionAdapter extends BaseAdapter {
             holder = (ExecutionAdapter.ViewHolder) convertView.getTag();
         }
         holder.executionDeleteBtn = (Button) convertView.findViewById(R.id.btn_delete_execution);
+        holder.executionPlayBtn = (Button) convertView.findViewById(R.id.btn_start);
+
         holder.executionDeleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Execution.getAllExecutions().remove(getItem(position));
 
                 calendarView.updateExecutionList();
+            }
+        });
+        holder.executionPlayBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(calendarView, B04_ExecutionView.class);
+                calendarView.startActivity(intent);
             }
         });
 
@@ -82,10 +92,9 @@ public class ExecutionAdapter extends BaseAdapter {
         }
     }
 
-
-
     static class ViewHolder {
         TextView executionNameView;
         Button executionDeleteBtn;
+        Button executionPlayBtn;
     }
 }

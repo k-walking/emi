@@ -8,27 +8,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Execution implements Parcelable {
+public class Execution {
 
     private static final ArrayList<Execution> allExecutions = new ArrayList<Execution>();
-
-    public static final Creator<Execution> CREATOR = new Creator<Execution>() {
-        @Override
-        public Execution createFromParcel(Parcel in) {
-            return new Execution(in);
-        }
-
-        @Override
-        public Execution[] newArray(int size) {
-            return new Execution[size];
-        }
-    };
 
     private boolean isAlreadyExecuted;
     private final Routine routine;
     private final Date executionTime; //TODO
-    private double duration;
-    private double quantity;
+    private Meassurement[] meassurements;
     private final int id;
 
     public Execution(int routineId, Date executionTime){
@@ -36,31 +23,10 @@ public class Execution implements Parcelable {
         routine = Routine.findRoutine(routineId);
         allExecutions.add(this);
         this.executionTime = executionTime;
-    }
+        meassurements = new Meassurement[routine.getAllTargets().size()];
 
-    Execution(Parcel in) {
-        id = in.readInt();
-        isAlreadyExecuted = in.readByte() != 0;
-        routine = in.readParcelable(Routine.class.getClassLoader());
-        duration = in.readDouble();
-        quantity = in.readDouble();
-        executionTime = new Date(in.readLong());
-
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeByte((byte) (isAlreadyExecuted ? 1 : 0));
-        dest.writeParcelable(routine, flags);
-        dest.writeDouble(duration);
-        dest.writeDouble(quantity);
-        dest.writeLong(executionTime.getTime());
+        for(int i = 0; i < meassurements.length; i++)
+            meassurements[i] = new Meassurement(routine.getAllTargets().get(i));
     }
 
     public static ArrayList<Execution> getAllExecutions() {
@@ -92,19 +58,7 @@ public class Execution implements Parcelable {
         return routine;
     }
 
-    public double getDuration() {
-        return duration;
-    }
-
-    public void setDuration(double duration) {
-        this.duration = duration;
-    }
-
-    public double getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(double quantity) {
-        this.quantity = quantity;
-    }
+   public Meassurement[] getAllMeassurements(){
+        return meassurements ;
+   }
 }
