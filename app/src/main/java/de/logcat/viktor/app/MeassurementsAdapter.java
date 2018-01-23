@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -41,37 +42,57 @@ public class MeassurementsAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         MeassurementsAdapter.ViewHolder holder;
+        final Meassurement meassurement = getItem(position);
+        final SportCategory category = meassurement.getTarget().getCategory();
+
         if(convertView == null) {
             convertView = inflater.inflate(R.layout.meassurements_list_row, null);
             holder = new MeassurementsAdapter.ViewHolder();
-            holder.categoryNameView = (TextView) convertView.findViewById(R.id.category_name);
-
             convertView.setTag(holder);
         } else {
             holder = (MeassurementsAdapter.ViewHolder) convertView.getTag();
         }
+
+        holder.categoryNameView = (TextView) convertView.findViewById(R.id.category_name);
+        holder.quantityView = (TextView) convertView.findViewById(R.id.quantity);
+        holder.durationView = (TextView) convertView.findViewById(R.id.duration);
         holder.timeActionBtn = (Button) convertView.findViewById(R.id.btn_start);
         holder.timeActionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println(">>>>>>>>>>>>>>>>>>>>>>");
-                SimpleDialog.openDialog(executionView, getItem(position).getTarget().getCategory().getQuantityQuestion(), "0", new SimpleDialog.Listener() {
-                    @Override
-                    public void submitAnswer(String answer) {
-                        getItem(position).setQuantity(Double.parseDouble(answer));
-                        executionView.updateMeassurementsList();
-                    }
-                });
 
+            if(meassurement.getTimeStarted() > 0){
+
+                meassurement.setDuration(meassurement.getDuration()+System.currentTimeMillis()/1000 - meassurement.getTimeStarted());
+                if(category.hasQuanitityParameter()) {
+                    SimpleDialog.openDialog(executionView, category.getQuantityQuestion(), "0", new SimpleDialog.Listener() {
+                        @Override
+                        public void submitAnswer(String answer) {
+                            meassurement.setQuantity(Double.parseDouble(answer));
+                        }
+                    });
+                }
+                meassurement.setTimeStarted(0);
+            } else {
+                meassurement.setTimeStarted(System.currentTimeMillis()/1000);
+            }
+            executionView.updateMeassurementsList();
             }
         });
 
-        holder.categoryNameView.setText(getItem(position).getTarget().getCategory().getName());
+        holder.categoryNameView.setText(category.getName());
+        holder.quantityView.setText(category.hasQuanitityParameter()?getItem(position).getQuantity()+" "+category.getUnit(): "");
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        Date date = new Date(1970,0,1);
+        date = new Date(date.getTime()+meassurement.getDuration()*1000);
+        holder.durationView.setText(meassurement.getTimeStarted() == 0 ? sdf.format(date): "läuft");
         return convertView;
     }
 
     static class ViewHolder {
         TextView categoryNameView;
+        TextView durationView;
+        TextView quantityView;
         Button timeActionBtn;
     }
 }

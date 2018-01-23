@@ -15,7 +15,6 @@ public class B04_ExecutionView extends Activity {
         lv_meassurements = findViewById(R.id.lv_meassurements);
         final MeassurementsAdapter meassurementsAdapter = new MeassurementsAdapter(this, execution);
         lv_meassurements.setAdapter(meassurementsAdapter);
-        setContentView(R.layout.meassurements_list_row);
     }
 
      public static void setExecution(Execution execution) {
