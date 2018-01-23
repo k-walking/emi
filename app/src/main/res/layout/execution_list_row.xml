@@ -8,8 +8,11 @@
     <TextView
         android:id="@+id/executionName"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="dfsf"
+        android:layout_height="29dp"
+        android:layout_alignBaseline="@+id/btn_delete_execution"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="36dp"
+        android:text="routineName"
         android:textStyle="bold"
         android:typeface="sans" />
 
@@ -27,8 +30,9 @@
         android:id="@+id/btn_start"
         android:layout_width="46dp"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/executionName"
-        android:layout_toStartOf="@+id/btn_start"
+        android:layout_alignBaseline="@+id/executionName"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="59dp"
         android:background="@android:drawable/ic_media_play"
         android:backgroundTint="#00bb66"
         android:textColor="#666666"

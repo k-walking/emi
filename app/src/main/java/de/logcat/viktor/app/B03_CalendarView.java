@@ -31,7 +31,6 @@ public class B03_CalendarView extends SlideMenu {
         executionList = findViewById(R.id.lv_executions);
 
         executionAdapter.setDate(selectedDate);
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>" + selectedDate.getMonth());
         executionList.setAdapter(executionAdapter);
 
         afterCreate();
@@ -42,7 +41,6 @@ public class B03_CalendarView extends SlideMenu {
         simpleCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                System.out.println("<>>>>>>>>>>>>>>>>>>>>>>>>>>"+ (selectedDate.getTime()-(new Date(year-1900, month, dayOfMonth)).getTime()));
                 selectedDate = new Date(year-1900, month, dayOfMonth);
                 executionAdapter.setDate(selectedDate);
             }

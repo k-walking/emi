@@ -54,8 +54,15 @@ public class MeassurementsAdapter extends BaseAdapter {
         holder.timeActionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                System.out.println(">>>>>>>>>>>>>>>>>>>>>>");
+                SimpleDialog.openDialog(executionView, getItem(position).getTarget().getCategory().getQuantityQuestion(), "0", new SimpleDialog.Listener() {
+                    @Override
+                    public void submitAnswer(String answer) {
+                        getItem(position).setQuantity(Double.parseDouble(answer));
+                        executionView.updateMeassurementsList();
+                    }
+                });
 
-                //calendarView.updateExecutionList();
             }
         });
 

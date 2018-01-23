@@ -74,6 +74,7 @@ public class ExecutionAdapter extends BaseAdapter {
         holder.executionPlayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                B04_ExecutionView.setExecution(getItem(position));
                 Intent intent = new Intent(calendarView, B04_ExecutionView.class);
                 calendarView.startActivity(intent);
             }

@@ -10,23 +10,30 @@
         android:id="@+id/category_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="dfsf"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="Name"
         android:textStyle="bold"
         android:typeface="sans" />
 
     <TextView
-        android:id="@+id/execution_duration"
+        android:id="@+id/duration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="dfsf"
+        android:layout_alignBaseline="@+id/btn_start"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="59dp"
+        android:text="Dauer"
         android:textStyle="bold"
         android:typeface="sans" />
 
     <TextView
-        android:id="@+id/execution_quantity"
+        android:id="@+id/quantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="dfsf"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/category_name"
+        android:text="Menge"
         android:textStyle="bold"
         android:typeface="sans" />
 
@@ -37,7 +44,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:background="@android:drawable/ic_delete"
+        android:background="@android:drawable/ic_menu_recent_history"
         android:backgroundTint="#00bb66"
         android:textColor="#666666"
         android:textSize="16sp" />
