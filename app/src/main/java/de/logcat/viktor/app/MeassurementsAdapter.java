@@ -63,7 +63,7 @@ public class MeassurementsAdapter extends BaseAdapter {
 
             if(meassurement.getTimeStarted() > 0){
 
-                meassurement.setDuration(meassurement.getDuration()+System.currentTimeMillis()/1000 - meassurement.getTimeStarted());
+                meassurement.setDuration(meassurement.getDuration()+System.currentTimeMillis() - meassurement.getTimeStarted());
                 if(category.hasQuanitityParameter()) {
                     SimpleDialog.openDialog(executionView, category.getQuantityQuestion(), "0", new SimpleDialog.Listener() {
                         @Override
@@ -74,7 +74,7 @@ public class MeassurementsAdapter extends BaseAdapter {
                 }
                 meassurement.setTimeStarted(0);
             } else {
-                meassurement.setTimeStarted(System.currentTimeMillis()/1000);
+                meassurement.setTimeStarted(System.currentTimeMillis());
             }
             executionView.updateMeassurementsList();
             }
@@ -84,8 +84,8 @@ public class MeassurementsAdapter extends BaseAdapter {
         holder.quantityView.setText(category.hasQuanitityParameter()?getItem(position).getQuantity()+" "+category.getUnit(): "");
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         Date date = new Date(1970,0,1);
-        date = new Date(date.getTime()+meassurement.getDuration()*1000);
-        holder.durationView.setText(meassurement.getTimeStarted() == 0 ? sdf.format(date): "läuft");
+        date = new Date(date.getTime()+meassurement.getDuration()+(meassurement.getTimeStarted() == 0 ? 0 : System.currentTimeMillis() - meassurement.getTimeStarted()));
+        holder.durationView.setText(sdf.format(date));
         return convertView;
     }
 

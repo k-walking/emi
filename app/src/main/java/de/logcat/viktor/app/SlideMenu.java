@@ -45,6 +45,7 @@ public abstract class SlideMenu extends AppCompatActivity{
         mNavItems.add(new NavItem("Analyse", "Analysiere deine sportlichen Aktivitäten", ""));
 
 
+
         DrawerListAdapter adapter = new DrawerListAdapter(this, mNavItems);
         mDrawerList.setAdapter(adapter);
 
@@ -60,7 +61,7 @@ public abstract class SlideMenu extends AppCompatActivity{
                 }else if(position == 1){
                     intent = new Intent(SlideMenu.this, B03_CalendarView.class);
                 }else if(position == 2){
-                    intent = new Intent(SlideMenu.this, B03_CalendarView.class);
+                    intent = new Intent(SlideMenu.this, B05_StatisticsView.class);
                 }else  {
                     Toast.makeText(getApplicationContext(), position, Toast.LENGTH_LONG).show();
                 }
