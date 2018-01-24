@@ -3,6 +3,7 @@ package de.logcat.viktor.app;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -39,9 +40,9 @@ public abstract class SlideMenu extends AppCompatActivity{
         mDrawerPane = (RelativeLayout) findViewById(R.id.drawerPane);
         //burger menu start
 
-        mNavItems.add(new NavItem("Meine Übungen", "Alle deine Übungen im Überblick"));
-        mNavItems.add(new NavItem("Kalender", "Die Übungen im Zeitplan"));
-        mNavItems.add(new NavItem("Analyse", "Analysiere deine sportlichen Aktivitäten"));
+        mNavItems.add(new NavItem("Meine Übungen", "Alle deine Übungen im Überblick", ""));
+        mNavItems.add(new NavItem("Kalender", "Die Übungen im Zeitplan", "ic_input_add"));
+        mNavItems.add(new NavItem("Analyse", "Analysiere deine sportlichen Aktivitäten", ""));
 
 
         DrawerListAdapter adapter = new DrawerListAdapter(this, mNavItems);
@@ -93,10 +94,13 @@ public abstract class SlideMenu extends AppCompatActivity{
     public class NavItem {
         String mTitle;
         String mSubtitle;
+        String iconResource;
+        Resources res = getResources();
 
-        public NavItem(String title, String subtitle) {
+        public NavItem(String title, String subtitle, String resource) {
             mTitle = title;
             mSubtitle = subtitle;
+            iconResource = resource;
         }
     }
 

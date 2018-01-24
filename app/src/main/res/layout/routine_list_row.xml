@@ -22,8 +22,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:background="@android:drawable/ic_delete"
-        android:backgroundTint="#00bb66"
-        android:textColor="#666666"
+        android:backgroundTint="@color/colorPrimaryGreen"
         android:textSize="16sp" />
 
 </RelativeLayout>

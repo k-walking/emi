@@ -1,6 +1,7 @@
 package de.logcat.viktor.app;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +54,11 @@ public class DrawerListAdapter extends BaseAdapter {
         TextView titleView = (TextView) view.findViewById(R.id.title);
         ImageView iconView = (ImageView) view.findViewById(R.id.icon);
 
+        Resources res = mNavItems.get(position).res;
+        int id = res.getIdentifier("android:drawable/" + mNavItems.get(position).iconResource, null, null);
+
         titleView.setText(mNavItems.get(position).mTitle);
+        iconView.setImageResource(id);
 
         return view;
     }
