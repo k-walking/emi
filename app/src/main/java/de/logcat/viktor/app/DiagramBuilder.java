@@ -11,8 +11,6 @@ import java.util.ArrayList;
 
 public class DiagramBuilder {
 
-    private static final int WIDTH = 400, HEIGHT = 400;
-
     public static Image buildRunningMap(TimeBindedCoordinate[] coords) {
         return null; // TODO
     }
@@ -27,9 +25,12 @@ public class DiagramBuilder {
 
     public static void buildQuantityProgressDiagram(SportCategory category, ImageView imageView) {
 
+        final int width = imageView.getWidth(), height = imageView.getHeight();
+
         double[][] dp = execsToDataPoints(findMeasurementsByCategory(category));
 
-        Bitmap bitmap = Bitmap.createBitmap(imageView.getWidth(), imageView.getHeight(), Bitmap.Config.ARGB_8888);
+
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         Paint paint = new Paint();
 
@@ -37,11 +38,17 @@ public class DiagramBuilder {
         paint.setColor(Color.BLACK);
         paint.setStrokeWidth(3);
         paint.setStyle(Paint.Style.STROKE);
+
+        if(dp == null) {
+            canvas.drawText("no data", width/10, height/10, paint);
+            return;
+        }
+
         for(int i = 0; i < dp.length-1; i++) {
-            float xA = (float)(dp[i][0] * WIDTH);
-            float yA = (float)(dp[i][1] * HEIGHT);
-            float xB = (float)(dp[i+1][0] * WIDTH);
-            float yB = (float)(dp[i+1][1] * HEIGHT);
+            float xA = (float)(dp[i][0] * width);
+            float yA = (float)(dp[i][1] * height);
+            float xB = (float)(dp[i+1][0] * width);
+            float yB = (float)(dp[i+1][1] * height);
             canvas.drawLine(xA, yA, xB, yB, paint);
         }
 
@@ -49,6 +56,9 @@ public class DiagramBuilder {
     }
 
     private static double[][] execsToDataPoints(ArrayList<Meassurement> meassurements) {
+        if (meassurements.size() == 0)
+            return null;
+
         long min_x = meassurements.get(0).getDuration(), max_x = min_x;
         double min_y = meassurements.get(0).getQuantity(), max_y = min_y;
 
