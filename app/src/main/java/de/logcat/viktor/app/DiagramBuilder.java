@@ -23,9 +23,7 @@ public class DiagramBuilder {
         return null; // TODO
     }
 
-    public static void buildQuantityProgressDiagram(SportCategory category, ImageView imageView) {
-
-        final int width = imageView.getWidth(), height = imageView.getHeight();
+    public static void buildQuantityProgressDiagram(SportCategory category, ImageView imageView, int width, int height) {
 
         double[][] dp = execsToDataPoints(findMeasurementsByCategory(category));
 
