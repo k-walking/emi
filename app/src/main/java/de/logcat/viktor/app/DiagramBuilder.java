@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.media.Image;
 import android.widget.ImageView;
 
@@ -38,8 +39,14 @@ public class DiagramBuilder {
         paint.setStyle(Paint.Style.STROKE);
 
         if(dp == null) {
+            paint.setTextSize(Math.min(width, height) / 10);
+            Typeface currentTypeFace = paint.getTypeface();
+            Typeface bold = Typeface.create(currentTypeFace, Typeface.BOLD);
+            paint.setTypeface(bold);
+
             canvas.drawText("no data", width/10, height/10, paint);
         } else {
+            paint.setStrokeWidth(3);
 
             for (int i = 0; i < dp.length - 1; i++) {
                 float xA = (float) (dp[i][0] * width);
