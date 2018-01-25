@@ -5,8 +5,10 @@ public class Meassurement {
     private double quantity = 0;
     private final Target target;
     private long timeStarted = 0;
+    private final Execution execution;
 
-    public Meassurement(Target target) {
+    public Meassurement(Execution execution, Target target) {
+        this.execution = execution;
         this.target = target;
     }
 
@@ -37,5 +39,7 @@ public class Meassurement {
     public void setTimeStarted(long timeStarted) {
         this.timeStarted = timeStarted;
     }
+
+    public Execution getExecution() { return execution; }
 }
 

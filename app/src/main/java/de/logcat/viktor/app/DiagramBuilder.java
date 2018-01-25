@@ -27,7 +27,7 @@ public class DiagramBuilder {
     public static void buildQuantityProgressDiagram(SportCategory category, ImageView imageView, int width, int height) {
 
         ArrayList<Meassurement> meassurements = findMeasurementsByCategory(category);
-        double[][] dp = meassurementsToDataPoints(meassurements);
+        double[][] dp = meassurementsToDataPoints(meassurements, true);
 
 
         Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
@@ -63,26 +63,30 @@ public class DiagramBuilder {
         imageView.setImageBitmap(bitmap);
     }
 
-    private static double[][] meassurementsToDataPoints(ArrayList<Meassurement> meassurements) {
+    private static double[][] meassurementsToDataPoints(ArrayList<Meassurement> meassurements, boolean quantityNotDuration) {
         if (meassurements.size() <= 1 )
             return null;
 
-        long min_x = meassurements.get(0).getDuration(), max_x = min_x;
-        double min_y = meassurements.get(0).getQuantity(), max_y = min_y;
-
-        for(int i = 0; i < meassurements.size(); i++) {
-            Meassurement m = meassurements.get(i);
-            min_x = Math.min(min_x, m.getDuration());
-            max_x = Math.max(max_x, m.getDuration());
-            min_y = Math.min(min_y, m.getQuantity());
-            max_y = Math.max(max_y, m.getQuantity());
-        }
+        long min_x = 0, max_x = 0;
+        double min_y = 0, max_y = 0;
 
         double[][] dataPoints = new double[meassurements.size()][2];
+
         for(int i = 0; i < meassurements.size(); i++) {
             Meassurement m = meassurements.get(i);
-            dataPoints[i][1] = (m.getDuration() - min_x)/(max_x-min_x);
-            dataPoints[i][0] = (m.getQuantity() - min_y)/(max_y-min_y);
+
+            dataPoints[i][0] = m.getExecution().getExecutiontime().getTime();
+            dataPoints[i][1] = quantityNotDuration ? m.getQuantity() : m.getDuration();
+
+            min_x = i == 0 ? (long)dataPoints[0][0] : Math.min(min_x, (long)dataPoints[i][0]);
+            max_x = i == 0 ? (long)dataPoints[0][0] : Math.max(max_x, (long)dataPoints[i][0]);
+            min_y = i == 0 ? dataPoints[0][1] : Math.min(min_y, dataPoints[i][1]);
+            max_y = i == 0 ? dataPoints[0][1] : Math.max(max_y, dataPoints[i][1]);
+        }
+
+        for(int i = 0; i < meassurements.size(); i++) {
+            dataPoints[i][0] = (dataPoints[i][0] - min_y)/(max_y-min_y);
+            dataPoints[i][1] = (dataPoints[i][1] - min_x)/(max_x-min_x);
         }
 
         dataPoints = quicksort(0, dataPoints.length-1, dataPoints);

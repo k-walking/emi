@@ -26,7 +26,7 @@ public class Execution {
         meassurements = new Meassurement[routine.getAllTargets().size()];
 
         for(int i = 0; i < meassurements.length; i++)
-            meassurements[i] = new Meassurement(routine.getAllTargets().get(i));
+            meassurements[i] = new Meassurement(this, routine.getAllTargets().get(i));
     }
 
     public static ArrayList<Execution> getAllExecutions() {
