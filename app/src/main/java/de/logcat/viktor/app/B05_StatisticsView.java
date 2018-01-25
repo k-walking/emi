@@ -6,8 +6,7 @@ import android.widget.ListView;
 
 public class B05_StatisticsView extends SlideMenu {
     private ListView lv_diagrams;
-
-
+    
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.b05);

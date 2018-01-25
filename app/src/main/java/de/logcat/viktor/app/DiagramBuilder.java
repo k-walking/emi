@@ -34,20 +34,20 @@ public class DiagramBuilder {
 
         canvas.drawRGB(255, 255, 255);
         paint.setColor(Color.BLACK);
-        paint.setStrokeWidth(3);
+        paint.setStrokeWidth(1);
         paint.setStyle(Paint.Style.STROKE);
 
         if(dp == null) {
             canvas.drawText("no data", width/10, height/10, paint);
-            return;
-        }
+        } else {
 
-        for(int i = 0; i < dp.length-1; i++) {
-            float xA = (float)(dp[i][0] * width);
-            float yA = (float)(dp[i][1] * height);
-            float xB = (float)(dp[i+1][0] * width);
-            float yB = (float)(dp[i+1][1] * height);
-            canvas.drawLine(xA, yA, xB, yB, paint);
+            for (int i = 0; i < dp.length - 1; i++) {
+                float xA = (float) (dp[i][0] * width);
+                float yA = (float) (dp[i][1] * height);
+                float xB = (float) (dp[i + 1][0] * width);
+                float yB = (float) (dp[i + 1][1] * height);
+                canvas.drawLine(xA, yA, xB, yB, paint);
+            }
         }
 
         imageView.setImageBitmap(bitmap);
