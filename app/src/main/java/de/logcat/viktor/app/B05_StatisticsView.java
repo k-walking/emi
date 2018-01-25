@@ -18,7 +18,4 @@ public class B05_StatisticsView extends SlideMenu {
 
         lv_diagrams.setAdapter(new DiagramListAdapter(this));
     }
-
-
-
 }

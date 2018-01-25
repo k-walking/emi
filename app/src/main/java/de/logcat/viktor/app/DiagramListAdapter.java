@@ -50,8 +50,9 @@ public class DiagramListAdapter extends BaseAdapter {
 
         holder.diagramNameView.setText(getItem(position).getName());
 
-        
+
         holder.diagramImage.setImageResource(R.drawable.ic_launcher_background);
+        DiagramBuilder.buildQuantityProgressDiagram(getItem(position), holder.diagramImage);
         return convertView;
     }
 

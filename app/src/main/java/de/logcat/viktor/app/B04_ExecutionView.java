@@ -22,10 +22,11 @@ public class B04_ExecutionView extends Activity {
         lv_meassurements.setAdapter(meassurementsAdapter);
 
         thread = new Thread(){
+            private boolean running = true;
             @Override
             public void run() {
                 try {
-                    while(true)synchronized (this) {
+                    while(running)synchronized (this) {
                         wait(1000);
 
                         runOnUiThread(new Runnable() {
@@ -41,6 +42,11 @@ public class B04_ExecutionView extends Activity {
                     e.printStackTrace();
                 }
             };
+
+            @Override
+            public void destroy() {
+                running = false;
+            }
         };
         thread.start();
     }
@@ -55,7 +61,7 @@ public class B04_ExecutionView extends Activity {
 
     @Override
     protected void onDestroy() {
-        //thread.destroy(); TODO
+        thread.destroy();
         super.onDestroy();
     }
 }
