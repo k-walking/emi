@@ -26,7 +26,8 @@ public class DiagramBuilder {
 
     public static void buildQuantityProgressDiagram(SportCategory category, ImageView imageView, int width, int height) {
 
-        double[][] dp = execsToDataPoints(findMeasurementsByCategory(category));
+        ArrayList<Meassurement> meassurements = findMeasurementsByCategory(category);
+        double[][] dp = meassurementsToDataPoints(meassurements);
 
 
         Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
@@ -36,16 +37,18 @@ public class DiagramBuilder {
         canvas.drawRGB(255, 255, 255);
         paint.setColor(Color.BLACK);
         paint.setStrokeWidth(1);
-        paint.setStyle(Paint.Style.STROKE);
+
 
         if(dp == null) {
+            paint.setStyle(Paint.Style.FILL);
             paint.setTextSize(Math.min(width, height) / 10);
             Typeface currentTypeFace = paint.getTypeface();
             Typeface bold = Typeface.create(currentTypeFace, Typeface.BOLD);
             paint.setTypeface(bold);
 
-            canvas.drawText("no data", width/10, height/10, paint);
+            canvas.drawText(meassurements.size()  == 0 ?"no data": "not enough data", width/10, height/10, paint);
         } else {
+            paint.setStyle(Paint.Style.STROKE);
             paint.setStrokeWidth(3);
 
             for (int i = 0; i < dp.length - 1; i++) {
@@ -60,8 +63,8 @@ public class DiagramBuilder {
         imageView.setImageBitmap(bitmap);
     }
 
-    private static double[][] execsToDataPoints(ArrayList<Meassurement> meassurements) {
-        if (meassurements.size() == 0)
+    private static double[][] meassurementsToDataPoints(ArrayList<Meassurement> meassurements) {
+        if (meassurements.size() <= 1 )
             return null;
 
         long min_x = meassurements.get(0).getDuration(), max_x = min_x;
