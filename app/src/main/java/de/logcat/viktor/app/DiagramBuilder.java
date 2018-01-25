@@ -24,10 +24,10 @@ public class DiagramBuilder {
         return null; // TODO
     }
 
-    public static void buildQuantityProgressDiagram(SportCategory category, ImageView imageView, int width, int height) {
+    public static void buildProgressDiagram(SportCategory category, ImageView imageView, int width, int height, boolean quantityNotDuration) {
 
         ArrayList<Meassurement> meassurements = findMeasurementsByCategory(category);
-        double[][] dp = meassurementsToDataPoints(meassurements, true);
+        double[][] dp = meassurementsToDataPoints(meassurements, quantityNotDuration);
 
 
         Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
@@ -53,9 +53,9 @@ public class DiagramBuilder {
 
             for (int i = 0; i < dp.length - 1; i++) {
                 float xA = (float) (dp[i][0] * width);
-                float yA = (float) (dp[i][1] * height);
+                float yA = (float) ((1-dp[i][1]) * height);
                 float xB = (float) (dp[i + 1][0] * width);
-                float yB = (float) (dp[i + 1][1] * height);
+                float yB = (float) ((1-dp[i + 1][1]) * height);
                 canvas.drawLine(xA, yA, xB, yB, paint);
             }
         }
@@ -85,8 +85,8 @@ public class DiagramBuilder {
         }
 
         for(int i = 0; i < meassurements.size(); i++) {
-            dataPoints[i][0] = (dataPoints[i][0] - min_y)/(max_y-min_y);
-            dataPoints[i][1] = (dataPoints[i][1] - min_x)/(max_x-min_x);
+            dataPoints[i][0] = (dataPoints[i][0] - min_x)/(max_x-min_x);
+            dataPoints[i][1] = (dataPoints[i][1] - min_y)/(max_y-min_y);
         }
 
         dataPoints = quicksort(0, dataPoints.length-1, dataPoints);

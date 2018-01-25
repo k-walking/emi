@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class DiagramListAdapter extends BaseAdapter {
@@ -41,7 +42,8 @@ public class DiagramListAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.diagram_list_row, null);
             holder = new DiagramListAdapter.ViewHolder();
             holder.diagramNameView = (TextView) convertView.findViewById(R.id.category_name);
-            holder.diagramImage = (ImageView) convertView.findViewById(R.id.diagram_image);
+            holder.diagramQuantityImage = (ImageView) convertView.findViewById(R.id.diagram_quantity_image);
+            holder.diagramDurationImage = (ImageView) convertView.findViewById(R.id.diagram_duration_image);
 
             convertView.setTag(holder);
         } else {
@@ -51,12 +53,14 @@ public class DiagramListAdapter extends BaseAdapter {
         holder.diagramNameView.setText(getItem(position).getName());
 
         //holder.diagramImage.setImageResource(R.drawable.ic_launcher_background);
-        DiagramBuilder.buildQuantityProgressDiagram(getItem(position), holder.diagramImage, 200, 200);
+        DiagramBuilder.buildProgressDiagram(getItem(position), holder.diagramQuantityImage, 180, 180, true);
+        DiagramBuilder.buildProgressDiagram(getItem(position), holder.diagramDurationImage, 180, 180, false);
         return convertView;
     }
 
     static class ViewHolder {
         TextView diagramNameView;
-        ImageView diagramImage;
+        ImageView diagramQuantityImage;
+        ImageView diagramDurationImage;
     }
 }

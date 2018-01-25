@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -80,12 +81,16 @@ public class MeassurementsAdapter extends BaseAdapter {
             }
         });
 
-        holder.categoryNameView.setText(category.getName());
-        holder.quantityView.setText(category.hasQuanitityParameter()?getItem(position).getQuantity()+" "+category.getUnit(): "");
+        int quantityProgress = (int) (100.0 * getItem(position).getQuantity()/getItem(position).getTarget().getQuantity());
+        int durationProgress = (int) (0.1 * getItem(position).getDuration()/getItem(position).getTarget().getDuration());
+
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         Date date = new Date(1970,0,1);
         date = new Date(date.getTime()+meassurement.getDuration()+(meassurement.getTimeStarted() == 0 ? 0 : System.currentTimeMillis() - meassurement.getTimeStarted()));
-        holder.durationView.setText(sdf.format(date));
+
+        holder.categoryNameView.setText(category.getName());
+        holder.quantityView.setText(category.hasQuanitityParameter()?getItem(position).getQuantity()+" "+category.getUnit()+" ("+quantityProgress +"%)": "");
+        holder.durationView.setText("("+durationProgress +"%) "+sdf.format(date));
         return convertView;
     }
 

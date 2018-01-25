@@ -14,11 +14,19 @@
         android:typeface="sans" />
 
     <ImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:id="@+id/diagram_image"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
+        android:id="@+id/diagram_quantity_image"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/diagram_duration_image" />
+
+    <ImageView
+        android:id="@+id/diagram_duration_image"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="89dp" />
 
 
 </RelativeLayout>
