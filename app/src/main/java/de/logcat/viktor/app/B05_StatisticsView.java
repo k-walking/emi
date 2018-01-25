@@ -17,13 +17,8 @@ public class B05_StatisticsView extends SlideMenu {
         lv_diagrams = (ListView) findViewById(R.id.lv_diagrams);
 
         lv_diagrams.setAdapter(new DiagramListAdapter(this));
-
     }
 
 
-    @Override
-    protected void onDestroy() {
-        //thread.destroy(); TODO
-        super.onDestroy();
-    }
+
 }

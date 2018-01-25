@@ -1,18 +1,13 @@
 package de.logcat.viktor.app;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.Date;
 
 public class DiagramListAdapter extends BaseAdapter {
 
@@ -46,6 +41,7 @@ public class DiagramListAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.diagram_list_row, null);
             holder = new DiagramListAdapter.ViewHolder();
             holder.diagramNameView = (TextView) convertView.findViewById(R.id.category_name);
+            holder.diagramImage = (ImageView) convertView.findViewById(R.id.diagram_image);
 
             convertView.setTag(holder);
         } else {
@@ -53,10 +49,14 @@ public class DiagramListAdapter extends BaseAdapter {
         }
 
         holder.diagramNameView.setText(getItem(position).getName());
+
+        
+        holder.diagramImage.setImageResource(R.drawable.ic_launcher_background);
         return convertView;
     }
 
     static class ViewHolder {
         TextView diagramNameView;
+        ImageView diagramImage;
     }
 }
