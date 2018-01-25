@@ -26,7 +26,7 @@ public class DiagramBuilder {
     }
 
     public static void buildQuantityProgressDiagram(SportCategory category, ImageView imageView) {
-        
+
         double[][] dp = execsToDataPoints(findMeasurementsByCategory(category));
 
         Bitmap bitmap = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888);
