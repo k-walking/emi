@@ -12,6 +12,14 @@ public class Meassurement {
         this.target = target;
     }
 
+    public Meassurement(String s) {
+        String[] properties = s.split("\\,");
+        execution  = Execution.findExecution(Integer.parseInt(properties[0]));
+        target  = Target.findTarget(Integer.parseInt(properties[1]));
+        quantity = Double.parseDouble(properties[2]);
+        duration = Long.parseLong(properties[3]);
+    }
+
     public long getDuration() {
         return duration;
     }
@@ -41,5 +49,10 @@ public class Meassurement {
     }
 
     public Execution getExecution() { return execution; }
+
+    @Override
+    public String toString() {
+        return execution.getId()+","+target.getId()+","+quantity+","+duration;
+    }
 }
 

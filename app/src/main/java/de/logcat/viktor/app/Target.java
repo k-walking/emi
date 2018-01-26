@@ -31,6 +31,18 @@ public class Target {
         quantity = Double.parseDouble(properties[3]);
     }
 
+    public static Target findTarget(int id){
+        for(int i = 0; i < Routine.getAllRoutines().size(); i++) {
+            Routine routine = Routine.getAllRoutines().get(i);
+            for(int j = 0; j < routine.getAllTargets().size(); j++) {
+                if(id == routine.getAllTargets().get(j).getId()) {
+                    return routine.getAllTargets().get(j);
+                }
+            }
+        }
+        return null;
+    }
+
     public SportCategory getCategory(){
         return category;
     }

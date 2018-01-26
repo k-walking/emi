@@ -4,7 +4,6 @@ import android.content.Context;
 import android.media.Image;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
@@ -16,10 +15,12 @@ public class Persistence {
     private static final String FILE_ROUTINES = "routines.txt";
     private static final String FILE_TARGETS = "targets.txt";
     private static final String FILE_EXECUTIONS = "executions.txt";
+    private static final String FILE_MEASUREMENTS = "measurements.txt";
 
     public Persistence(Context context){
         this.context = context;
     }
+
     // === save ===
 
     public void saveRoutines() {
@@ -29,7 +30,6 @@ public class Persistence {
             data += (i > 0 ? ";" : "")+Routine.getAllRoutines().get(i).toString();
         }
         writeToFile( FILE_ROUTINES, data);
-
     }
 
     private void saveTargets() {
@@ -39,13 +39,12 @@ public class Persistence {
             for(int j = 0; j < routine.getAllTargets().size(); j++) {
                 data += (j > 0 ? ";" : "")+routine.getAllTargets().get(j).toString();
             }
-
         }
         writeToFile( FILE_TARGETS, data);
     }
 
     public void saveExecutions() {
-        saveMeassurements();
+        saveMeasurements();
         String data = "";
         for(int i = 0; i < Execution.getAllExecutions().size(); i++) {
             data += (i > 0 ? ";" : "")+Execution.getAllExecutions().get(i).toString();
@@ -53,8 +52,15 @@ public class Persistence {
         writeToFile( FILE_EXECUTIONS, data);
     }
 
-    private void saveMeassurements() {
-        //TODO
+    public void saveMeasurements() {
+        String data = "";
+        for(int i = 0; i < Execution.getAllExecutions().size(); i++) {
+            Execution execution = Execution.getAllExecutions().get(i);
+            for(int j = 0; j < execution.getAllMeassurements().length; j++) {
+                data += (j > 0 ? ";" : "")+execution.getAllMeassurements()[j].toString();
+            }
+        }
+        writeToFile( FILE_MEASUREMENTS, data);
     }
 
     public void saveProgressDiagrams(SportCategory category, Image durationProgressDiagram, Image quantityProgressDiagram) {

@@ -18,11 +18,13 @@ public class MeassurementsAdapter extends BaseAdapter {
     private static LayoutInflater inflater = null;
     private final B04_ExecutionView executionView;
     private final Execution execution;
+    private final Persistence persistence;
 
     public MeassurementsAdapter(Context context, Execution execution) {
         inflater = LayoutInflater.from(context);
         this.execution = execution;
         this.executionView = (B04_ExecutionView) context;
+        persistence = new Persistence(context);
     }
 
     @Override
@@ -70,9 +72,11 @@ public class MeassurementsAdapter extends BaseAdapter {
                         @Override
                         public void submitAnswer(String answer) {
                             meassurement.setQuantity(Double.parseDouble(answer));
+                            persistence.saveMeasurements();
+
                         }
                     });
-                }
+                } else persistence.saveMeasurements();
                 meassurement.setTimeStarted(0);
             } else {
                 meassurement.setTimeStarted(System.currentTimeMillis());

@@ -31,7 +31,6 @@ public class RoutineDateDialog {
         final AlertDialog dialog = builder.show();
         builder.create();
 
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3) {
                 dialog.dismiss();
@@ -40,9 +39,4 @@ public class RoutineDateDialog {
             }
         });
     }
-
-
-
-
-
 }

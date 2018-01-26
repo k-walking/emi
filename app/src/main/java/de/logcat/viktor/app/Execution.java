@@ -1,11 +1,6 @@
 package de.logcat.viktor.app;
 
 import android.content.Context;
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -13,9 +8,8 @@ public class Execution {
 
     private static ArrayList<Execution> allExecutions = new ArrayList<Execution>();
 
-    private boolean isAlreadyExecuted;
     private final Routine routine;
-    private final Date executionTime; //TODO
+    private final Date executionTime;
     private Meassurement[] meassurements;
     private final int id;
 
@@ -32,11 +26,18 @@ public class Execution {
 
     public Execution(String s) {
         String[] properties = s.split("\\,");
-        System.out.println(">>>>>>>>>>>>>>"+s);
         id  = Integer.parseInt(properties[0]);
         routine  = Routine.findRoutine(Integer.parseInt(properties[1]));
-        executionTime  = new Date(Long.parseLong(properties[1]));
+        executionTime  = new Date(Long.parseLong(properties[2]));
         //TODO
+    }
+
+    public static Execution findExecution(int id) {
+        Execution execution;
+        for(int i = 0; i < Execution.getAllExecutions().size(); i++)
+            if((execution = Execution.getAllExecutions().get(i)).getId() == id)
+                return execution;
+        return null;
     }
 
     public static ArrayList<Execution> getAllExecutions() {
@@ -68,9 +69,9 @@ public class Execution {
         return routine;
     }
 
-   public Meassurement[] getAllMeassurements(){
+    public Meassurement[] getAllMeassurements(){
         return meassurements ;
-   }
+    }
 
     @Override
     public String toString() {

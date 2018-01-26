@@ -45,7 +45,6 @@ public class Routine{
         id  = Integer.parseInt(properties[0]);
         name = properties[1];
         String[] targetStrings = properties[2].split("\\|");
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+properties[2]);
         for(int i = 0; i < targetStrings.length; i++) {
             for(int j = 0; j < allTargets.size(); j++) {
                 if(Integer.parseInt(targetStrings[i]) == allTargets.get(j).getId()) {
