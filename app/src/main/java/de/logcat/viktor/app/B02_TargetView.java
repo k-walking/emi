@@ -19,14 +19,14 @@ import java.util.List;
 
 public class B02_TargetView extends Activity {
 
-    final Context mContext = this;
-    List<String> categoryNames;
-    Routine routine;
-    String routineName;
+    private List<String> categoryNames;
+    private Routine routine;
+    private String routineName;
+    private final Persistence persistence = new Persistence(this);
 
-    EditText ed_routine_name;
-    ListView lv_SportCategories;
-    Button btn_save;
+    private EditText ed_routine_name;
+    private ListView lv_SportCategories;
+    private Button btn_save;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,7 +60,7 @@ public class B02_TargetView extends Activity {
             public void onClick(View view) {
             routineName = ed_routine_name.getText().toString();
             routine.setName(routineName);
-            Persistence.save(routine);
+            persistence.saveRoutines();
             finish();
             }
         });
@@ -88,10 +88,10 @@ public class B02_TargetView extends Activity {
                 if(category.getUnit() == null)
                     targetsList.invalidateViews();
                 else
-                    SimpleDialog.openDialog(mContext, category.getQuantityQuestion(), "5", listenerQuantity);
+                    SimpleDialog.openDialog(B02_TargetView.this, category.getQuantityQuestion(), "5", listenerQuantity);
             }
         };
 
-        SimpleDialog.openDialog(mContext, "Wie lange möchtest du '"+category.getName()+"' ausführen?", "60", listenerDuration);
+        SimpleDialog.openDialog(this, "Wie lange möchtest du '"+category.getName()+"' ausführen?", "60", listenerDuration);
     }
 }

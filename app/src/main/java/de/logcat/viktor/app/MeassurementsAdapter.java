@@ -82,7 +82,7 @@ public class MeassurementsAdapter extends BaseAdapter {
         });
 
         int quantityProgress = (int) (100.0 * getItem(position).getQuantity()/getItem(position).getTarget().getQuantity());
-        int durationProgress = (int) (0.1 * getItem(position).getDuration()/getItem(position).getTarget().getDuration());
+        int durationProgress = (int) (0.1 / 60 * getItem(position).getDuration()/getItem(position).getTarget().getDuration());
 
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         Date date = new Date(1970,0,1);

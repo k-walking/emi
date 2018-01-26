@@ -19,6 +19,8 @@ public class B01_RoutineView extends SlideMenu {
 
         super.onCreate(savedInstanceState);
 
+        Routine.loadAllRoutines(this);
+
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);

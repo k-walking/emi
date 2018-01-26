@@ -1,15 +1,16 @@
 package de.logcat.viktor.app;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
 
 public class Routine{
+    private static ArrayList<Routine> routines;
 
     private String name;
     private final ArrayList<Target> routineTargets = new ArrayList<>();
-    private static ArrayList<Routine> routines = Persistence.loadRoutines();;
     private final int id;
 
     public static Routine findRoutine(int id) {
@@ -39,6 +40,20 @@ public class Routine{
         routines.add(this);
     }
 
+    public Routine(String s) {
+        String[] properties = s.split("\\\\,");
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>"+properties[0]);
+        id  = Integer.parseInt(properties[0]);
+        name = properties[1];
+    }
+
+    @Override
+    public String toString() {
+        String targets = "";
+        for(int i = 0; i < routineTargets.size(); i++) targets += (i > 0 ? ";" : "")+routineTargets.get(i).getId();
+        return id+","+name+",("+targets+")";
+    }
+
     public int getId() {
         return id;
     }
@@ -57,5 +72,9 @@ public class Routine{
 
     static ArrayList<Routine> getAllRoutines() {
         return routines;
+    }
+
+    public static void loadAllRoutines(Context context){
+        routines = new Persistence(context).loadRoutines();
     }
 }
