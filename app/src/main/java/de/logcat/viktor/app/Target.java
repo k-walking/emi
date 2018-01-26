@@ -11,11 +11,16 @@ public class Target {
     private final int id;
 
     /**Constructor of target**/
-    public Target(SportCategory category, double duration, double quantity, int id) {
+    public Target(SportCategory category) {
         this.category = category;
-        duration = duration;
-        quantity = quantity;
-        this.id = id;
+        int highestId = 0;
+
+        for(int i = 0; i < Routine.getAllRoutines().size(); i++){
+            for(int j = 0; j < Routine.getAllRoutines().get(i).getAllTargets().size(); j++)
+                highestId = Math.max(highestId, Routine.getAllRoutines().get(i).getAllTargets().get(j).getId());
+        }
+
+        id = highestId+1;
     }
 
     public Target(String s) {

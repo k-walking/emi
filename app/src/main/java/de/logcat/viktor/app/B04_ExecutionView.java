@@ -32,11 +32,9 @@ public class B04_ExecutionView extends Activity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>asd");
                                 updateMeassurementsList();
                             }
                         });
-
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -69,7 +69,7 @@ public class B02_TargetView extends Activity {
     private void onClickedCategory(final SportCategory category) {
 
         final ListView targetsList = (ListView)findViewById(R.id.lv_targets);
-        final Target target = new Target(category, 0, 0 ,0);
+        final Target target = new Target(category);
         targetsList.setAdapter(new TargetListAdapter(this, routine));
         routine.addTarget(target);
 

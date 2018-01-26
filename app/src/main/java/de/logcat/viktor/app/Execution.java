@@ -1,5 +1,6 @@
 package de.logcat.viktor.app;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -10,7 +11,7 @@ import java.util.Date;
 
 public class Execution {
 
-    private static final ArrayList<Execution> allExecutions = new ArrayList<Execution>();
+    private static ArrayList<Execution> allExecutions = new ArrayList<Execution>();
 
     private boolean isAlreadyExecuted;
     private final Routine routine;
@@ -27,6 +28,15 @@ public class Execution {
 
         for(int i = 0; i < meassurements.length; i++)
             meassurements[i] = new Meassurement(this, routine.getAllTargets().get(i));
+    }
+
+    public Execution(String s) {
+        String[] properties = s.split("\\,");
+        System.out.println(">>>>>>>>>>>>>>"+s);
+        id  = Integer.parseInt(properties[0]);
+        routine  = Routine.findRoutine(Integer.parseInt(properties[1]));
+        executionTime  = new Date(Long.parseLong(properties[1]));
+        //TODO
     }
 
     public static ArrayList<Execution> getAllExecutions() {
@@ -61,4 +71,13 @@ public class Execution {
    public Meassurement[] getAllMeassurements(){
         return meassurements ;
    }
+
+    @Override
+    public String toString() {
+        return id+","+routine.getId()+","+executionTime.getTime()+",";//TODO
+    }
+
+    public static void loadAllExecutions(Context context){
+        allExecutions = new Persistence(context).loadExecutions();
+    }
 }

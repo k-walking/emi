@@ -19,10 +19,13 @@ public class B03_CalendarView extends SlideMenu {
     private ListView routinesList, executionList;
     private Date selectedDate = new Date(System.currentTimeMillis());
     private ExecutionAdapter executionAdapter;
+    private final Persistence persistence = new Persistence(this);
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Execution.loadAllExecutions(this);
         setContentView(R.layout.pick_execution_dialog);
+
         routinesList = findViewById(R.id.listViewRoutines);
 
         executionAdapter = new ExecutionAdapter(B03_CalendarView.this);
@@ -53,6 +56,7 @@ public class B03_CalendarView extends SlideMenu {
                     @Override
                     public void onClosed(Routine routine) {
                         new Execution(routine.getId(), selectedDate);
+                        persistence.saveExecutions();
                         updateExecutionList();
                     }
                 });

@@ -15,6 +15,7 @@ public class Persistence {
     private final ArrayList<Target> allTargets = new ArrayList<Target>();
     private static final String FILE_ROUTINES = "routines.txt";
     private static final String FILE_TARGETS = "targets.txt";
+    private static final String FILE_EXECUTIONS = "executions.txt";
 
     public Persistence(Context context){
         this.context = context;
@@ -22,12 +23,13 @@ public class Persistence {
     // === save ===
 
     public void saveRoutines() {
+        saveTargets();
         String data = "";
         for(int i = 0; i < Routine.getAllRoutines().size(); i++) {
             data += (i > 0 ? ";" : "")+Routine.getAllRoutines().get(i).toString();
         }
         writeToFile( FILE_ROUTINES, data);
-        saveTargets();
+
     }
 
     private void saveTargets() {
@@ -37,13 +39,22 @@ public class Persistence {
             for(int j = 0; j < routine.getAllTargets().size(); j++) {
                 data += (j > 0 ? ";" : "")+routine.getAllTargets().get(j).toString();
             }
-            data += (i > 0 ? ";" : "")+Routine.getAllRoutines().get(i).toString();
+
         }
         writeToFile( FILE_TARGETS, data);
     }
 
-    public void save(Execution execution) {
-        // TODO
+    public void saveExecutions() {
+        saveMeassurements();
+        String data = "";
+        for(int i = 0; i < Execution.getAllExecutions().size(); i++) {
+            data += (i > 0 ? ";" : "")+Execution.getAllExecutions().get(i).toString();
+        }
+        writeToFile( FILE_EXECUTIONS, data);
+    }
+
+    private void saveMeassurements() {
+        //TODO
     }
 
     public void saveProgressDiagrams(SportCategory category, Image durationProgressDiagram, Image quantityProgressDiagram) {
@@ -68,13 +79,21 @@ public class Persistence {
 
     public void loadTargets() {
         String data = readFromFile(FILE_TARGETS);
-        System.out.println("<<<<<<<<<<<<<<<<<<<<<"+data);
         String[] targetStrings = data.split("\\;");
         for(int i = 0; i < targetStrings.length; i++) if(targetStrings[i].length() > 0) allTargets.add(new Target (targetStrings[i]));
     }
 
     public ArrayList<Execution> loadExecutions() {
-        return null; // TODO
+        ArrayList<Execution> allExecutions = new ArrayList<Execution>();
+        String data = readFromFile(FILE_EXECUTIONS);
+        String[] executionStrings = data.split("\\;");
+        for(int i = 0; i < executionStrings.length; i++) {
+            if(executionStrings[i].length() > 0) {
+                Execution execution = new Execution(executionStrings[i]);
+                allExecutions.add(execution);
+            }
+        }
+        return allExecutions;
     }
 
     private void writeToFile(String filename, String data){
