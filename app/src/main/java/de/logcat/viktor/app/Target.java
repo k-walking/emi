@@ -18,6 +18,14 @@ public class Target {
         this.id = id;
     }
 
+    public Target(String s) {
+        String[] properties = s.split("\\,");
+        id  = Integer.parseInt(properties[0]);
+        category = SportCategory.getAllCategories().get(Integer.parseInt(properties[1]));
+        duration = Double.parseDouble(properties[2]);
+        quantity = Double.parseDouble(properties[3]);
+    }
+
     public SportCategory getCategory(){
         return category;
     }
@@ -40,6 +48,11 @@ public class Target {
 
     public int getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return id+","+getCategory().getId()+","+getDuration()+","+getQuantity();
     }
 }
 

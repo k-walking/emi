@@ -12,11 +12,13 @@ public class RoutinesAdapter extends BaseAdapter {
     private static LayoutInflater inflater = null;
     private final SlideMenu view;
     private final boolean hasDelete;
+    private final Persistence persistence;
 
     public RoutinesAdapter(Context context, boolean hasDelete) {
         inflater = LayoutInflater.from(context);
         this.view = (SlideMenu) context;
         this.hasDelete = hasDelete;
+        persistence = new Persistence(context);
     }
 
     @Override
@@ -48,6 +50,7 @@ public class RoutinesAdapter extends BaseAdapter {
                     public void onClick(View v) {
                         Routine.getAllRoutines().remove(position);
                         view.updateRoutineList();
+                        persistence.saveRoutines();
                     }
                 });
             }

@@ -12,7 +12,9 @@ import java.util.ArrayList;
 
 public class Persistence {
     private final Context context;
+    private final ArrayList<Target> allTargets = new ArrayList<Target>();
     private static final String FILE_ROUTINES = "routines.txt";
+    private static final String FILE_TARGETS = "targets.txt";
 
     public Persistence(Context context){
         this.context = context;
@@ -25,6 +27,19 @@ public class Persistence {
             data += (i > 0 ? ";" : "")+Routine.getAllRoutines().get(i).toString();
         }
         writeToFile( FILE_ROUTINES, data);
+        saveTargets();
+    }
+
+    private void saveTargets() {
+        String data = "";
+        for(int i = 0; i < Routine.getAllRoutines().size(); i++) {
+            Routine routine = Routine.getAllRoutines().get(i);
+            for(int j = 0; j < routine.getAllTargets().size(); j++) {
+                data += (j > 0 ? ";" : "")+routine.getAllTargets().get(j).toString();
+            }
+            data += (i > 0 ? ";" : "")+Routine.getAllRoutines().get(i).toString();
+        }
+        writeToFile( FILE_TARGETS, data);
     }
 
     public void save(Execution execution) {
@@ -38,30 +53,31 @@ public class Persistence {
     // === load ====
 
     public ArrayList<Routine> loadRoutines() {
+        loadTargets();
         ArrayList<Routine> allRoutines = new ArrayList<Routine>();
         String data = readFromFile(FILE_ROUTINES);
-        String[] routineStrings = data.split("\\\\;");
-        System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"+data);
-        for(int i = 0; i < routineStrings.length; i++) if(routineStrings[i].length() > 0) allRoutines.add(new Routine (routineStrings[i]));
+        String[] routineStrings = data.split("\\;");
+        for(int i = 0; i < routineStrings.length; i++) {
+            if(routineStrings[i].length() > 0) {
+                Routine routine = new Routine(routineStrings[i], allTargets);
+                allRoutines.add(routine);
+            }
+        }
         return allRoutines;
+    }
+
+    public void loadTargets() {
+        String data = readFromFile(FILE_TARGETS);
+        System.out.println("<<<<<<<<<<<<<<<<<<<<<"+data);
+        String[] targetStrings = data.split("\\;");
+        for(int i = 0; i < targetStrings.length; i++) if(targetStrings[i].length() > 0) allTargets.add(new Target (targetStrings[i]));
     }
 
     public ArrayList<Execution> loadExecutions() {
         return null; // TODO
     }
 
-    // === delete ===
-
-    public void deleteRoutine(int id) {
-        // TODO
-    }
-
-    public void deleteTarget(int id) {
-        // TODO
-    }
-
     private void writeToFile(String filename, String data){
-        System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>"+data);
         try {
             FileOutputStream out = context.openFileOutput(filename, Context.MODE_PRIVATE);
             out.write(data.getBytes());
@@ -72,7 +88,7 @@ public class Persistence {
     }
 
     public String readFromFile(String filename){
-        if(!new File(filename).exists()) return "";
+        //if(!new File(filename).exists()) return "";
         StringBuilder sb = new StringBuilder();
 
         try {

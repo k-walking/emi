@@ -40,18 +40,25 @@ public class Routine{
         routines.add(this);
     }
 
-    public Routine(String s) {
-        String[] properties = s.split("\\\\,");
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>"+properties[0]);
+    public Routine(String s, ArrayList<Target> allTargets) {
+        String[] properties = s.split("\\,");
         id  = Integer.parseInt(properties[0]);
         name = properties[1];
+        String[] targetStrings = properties[2].split("\\|");
+        for(int i = 0; i < targetStrings.length; i++) {
+            for(int j = 0; j < allTargets.size(); j++) {
+                if(Integer.parseInt(targetStrings[i]) == allTargets.get(j).getId()) {
+                    addTarget(allTargets.get(j));
+                }
+            }
+        }
     }
 
     @Override
     public String toString() {
         String targets = "";
-        for(int i = 0; i < routineTargets.size(); i++) targets += (i > 0 ? ";" : "")+routineTargets.get(i).getId();
-        return id+","+name+",("+targets+")";
+        for(int i = 0; i < routineTargets.size(); i++) targets += (i > 0 ? "|" : "")+routineTargets.get(i).getId();
+        return id+","+name+","+targets;
     }
 
     public int getId() {
