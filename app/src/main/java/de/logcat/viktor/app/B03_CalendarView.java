@@ -23,7 +23,7 @@ public class B03_CalendarView extends SlideMenu {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Execution.loadAllExecutions(this);
+        DiagramBuilder.setPersistence(new Persistence(this));
         setContentView(R.layout.pick_execution_dialog);
 
         routinesList = findViewById(R.id.listViewRoutines);

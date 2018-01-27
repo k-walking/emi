@@ -1,11 +1,16 @@
 package de.logcat.viktor.app;
 
 import android.content.Context;
-import android.media.Image;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
@@ -16,6 +21,7 @@ public class Persistence {
     private static final String FILE_TARGETS = "targets.txt";
     private static final String FILE_EXECUTIONS = "executions.txt";
     private static final String FILE_MEASUREMENTS = "measurements.txt";
+    private static final String DIR_DIAGRAMS = "diagram_";
 
     public Persistence(Context context){
         this.context = context;
@@ -58,14 +64,16 @@ public class Persistence {
         for(int i = 0; i < Execution.getAllExecutions().size(); i++) {
             Execution execution = Execution.getAllExecutions().get(i);
             for(int j = 0; j < execution.getAllMeassurements().length; j++) {
-                data += (j > 0 ? ";" : "")+execution.getAllMeassurements()[j].toString();
+                data += (data.length() > 0 ? ";" : "")+execution.getAllMeassurements()[j].toString();
             }
         }
         writeToFile( FILE_MEASUREMENTS, data);
     }
 
-    public void saveProgressDiagrams(SportCategory category, Image durationProgressDiagram, Image quantityProgressDiagram) {
-        // TODO
+    public void saveProgressDiagrams(SportCategory category, Bitmap progressDiagram, boolean quantityNotDuration) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        progressDiagram.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        writeToFile( DIR_DIAGRAMS+category.getId()+"_"+(quantityNotDuration?"Q": "D") ,stream.toByteArray());
     }
 
     // === load ====
@@ -86,7 +94,6 @@ public class Persistence {
 
     public void loadTargets() {
         String data = readFromFile(FILE_TARGETS);
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>load"+data);
         String[] targetStrings = data.split("\\;");
         for(int i = 0; i < targetStrings.length; i++) if(targetStrings[i].length() > 0) allTargets.add(new Target (targetStrings[i]));
     }
@@ -109,13 +116,32 @@ public class Persistence {
         String data = readFromFile(FILE_MEASUREMENTS);
         String[] measurementStrings = data.split("\\;");
         for(int i = 0; i < measurementStrings.length; i++) if(measurementStrings[i].length() > 0) new Meassurement (measurementStrings[i]);
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>save"+data);
+    }
+
+    public void loadProgressDiagrams(){
+        for(int i = 0; i < SportCategory.getAllCategories().size(); i++) {
+            SportCategory category = SportCategory.getAllCategories().get(i);
+            byte[] dataDuration = readBytesFromFile(DIR_DIAGRAMS + category.getId() + "_D");
+            byte[] dataQuantity = readBytesFromFile(DIR_DIAGRAMS + category.getId() + "_Q");
+            category.setDurationProgressDiagram(dataDuration == null ? null : BitmapFactory.decodeByteArray(dataDuration, 0, dataDuration.length));
+            category.setQuantityProgressDiagram(dataQuantity == null ? null : BitmapFactory.decodeByteArray(dataQuantity, 0, dataQuantity.length));
+        }
     }
 
     private void writeToFile(String filename, String data){
         try {
             FileOutputStream out = context.openFileOutput(filename, Context.MODE_PRIVATE);
             out.write(data.getBytes());
+            out.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void writeToFile(String path, byte[] data){
+        try {
+            FileOutputStream out = context.openFileOutput(path, Context.MODE_PRIVATE);
+            out.write(data);
             out.close();
         } catch(Exception e) {
             e.printStackTrace();
@@ -137,5 +163,24 @@ public class Persistence {
         }
 
         return sb.toString();
+    }
+
+    public byte[] readBytesFromFile(String filename){
+        File file = context.getFileStreamPath(filename);
+        if(!file.exists())
+            return null;
+
+        int size = (int) file.length();
+        byte[] bytes = new byte[size];
+
+        try {
+            BufferedInputStream buf = new BufferedInputStream(new FileInputStream(file));
+            buf.read(bytes, 0, bytes.length);
+            buf.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return bytes;
     }
 }

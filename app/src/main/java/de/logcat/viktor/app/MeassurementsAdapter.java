@@ -73,6 +73,9 @@ public class MeassurementsAdapter extends BaseAdapter {
                         public void submitAnswer(String answer) {
                             meassurement.setQuantity(Double.parseDouble(answer));
                             persistence.saveMeasurements();
+                            meassurement.getTarget().getCategory().setQuantityProgressDiagram(null);
+                            meassurement.getTarget().getCategory().setDurationProgressDiagram(null);
+                            DiagramBuilder.updateDiagram(category,true);
 
                         }
                     });

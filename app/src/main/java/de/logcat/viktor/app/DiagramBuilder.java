@@ -9,8 +9,11 @@ import android.media.Image;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class DiagramBuilder {
+    private static Persistence persistence;
+    public static final int WIDTH = 180 , HEIGHT = 180;
 
     public static Image buildRunningMap(TimeBindedCoordinate[] coords) {
         return null; // TODO
@@ -24,13 +27,16 @@ public class DiagramBuilder {
         return null; // TODO
     }
 
-    public static void buildProgressDiagram(SportCategory category, ImageView imageView, int width, int height, boolean quantityNotDuration) {
+    public static void setPersistence(Persistence persistence) {
+        DiagramBuilder.persistence = persistence;
+    }
+
+    public static void buildProgressDiagram(SportCategory category, ImageView imageView, boolean quantityNotDuration) {
 
         ArrayList<Meassurement> meassurements = findMeasurementsByCategory(category);
         double[][] dp = meassurementsToDataPoints(meassurements, quantityNotDuration);
 
-
-        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Bitmap bitmap = Bitmap.createBitmap(WIDTH, HEIGHT, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         Paint paint = new Paint();
 
@@ -38,29 +44,55 @@ public class DiagramBuilder {
         paint.setColor(Color.BLACK);
         paint.setStrokeWidth(1);
 
-
         if(dp == null) {
             paint.setStyle(Paint.Style.FILL);
-            paint.setTextSize(Math.min(width, height) / 10);
+            paint.setTextSize(Math.min(WIDTH, HEIGHT) / 10);
             Typeface currentTypeFace = paint.getTypeface();
             Typeface bold = Typeface.create(currentTypeFace, Typeface.BOLD);
             paint.setTypeface(bold);
 
-            canvas.drawText(meassurements.size()  == 0 ?"no data": "not enough data", width/10, height/10, paint);
-        } else {
-            paint.setStyle(Paint.Style.STROKE);
-            paint.setStrokeWidth(3);
+            canvas.drawText(meassurements.size()  == 0 ?"no data": "not enough data", WIDTH/10, HEIGHT/10, paint);
+        } else if(quantityNotDuration? category.getQuantityProgressDiagram() == null: category.getDurationProgressDiagram() == null) {
 
-            for (int i = 0; i < dp.length - 1; i++) {
-                float xA = (float) (dp[i][0] * width);
-                float yA = (float) ((1-dp[i][1]) * height);
-                float xB = (float) (dp[i + 1][0] * width);
-                float yB = (float) ((1-dp[i + 1][1]) * height);
-                canvas.drawLine(xA, yA, xB, yB, paint);
-            }
+            drawDiagram(category, bitmap, canvas, paint, quantityNotDuration, dp);
         }
 
         imageView.setImageBitmap(bitmap);
+    }
+
+    public static void updateDiagram(SportCategory category, boolean quantityNotDuration) {
+        ArrayList<Meassurement> meassurements = findMeasurementsByCategory(category);
+        double[][] dp = meassurementsToDataPoints(meassurements, quantityNotDuration);
+
+        Bitmap bitmap = Bitmap.createBitmap(WIDTH, HEIGHT, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        Paint paint = new Paint();
+
+        canvas.drawRGB(255, 255, 255);
+        paint.setColor(Color.BLACK);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(3);
+
+        drawDiagram(category, bitmap, canvas, paint, quantityNotDuration, dp);
+
+    }
+
+    private static void drawDiagram(SportCategory category,Bitmap bitmap, Canvas canvas, Paint paint, boolean quantityNotDuration, double[][] dp){
+        for (int i = 0; i < dp.length - 1; i++) {
+            float xA = (float) (dp[i][0] * WIDTH);
+            float yA = (float) ((1-dp[i][1]) * HEIGHT);
+            float xB = (float) (dp[i + 1][0] * WIDTH);
+            float yB = (float) ((1-dp[i + 1][1]) * HEIGHT);
+            canvas.drawLine(xA, yA, xB, yB, paint);
+
+            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>"+xA+" ,"+yA);
+        }
+
+        persistence.saveProgressDiagrams(category, bitmap, quantityNotDuration);
+        if(quantityNotDuration)
+            category.setQuantityProgressDiagram(bitmap);
+        else
+            category.setDurationProgressDiagram(bitmap);
     }
 
     private static double[][] meassurementsToDataPoints(ArrayList<Meassurement> meassurements, boolean quantityNotDuration) {

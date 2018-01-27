@@ -1,5 +1,6 @@
 package de.logcat.viktor.app;
 
+import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -14,6 +15,7 @@ public class SportCategory{
     private final int id;
     private static ArrayList<SportCategory> categories = new ArrayList<SportCategory>();
     private final String unit;
+    private Bitmap durationProgressDiagram, quantityProgressDiagram;
 
     static {
         initCategories();
@@ -44,6 +46,14 @@ public class SportCategory{
         return null;
     }
 
+    public Bitmap getDurationProgressDiagram() {
+        return durationProgressDiagram;
+    }
+
+    public Bitmap getQuantityProgressDiagram() {
+        return quantityProgressDiagram;
+    }
+
     static ArrayList<SportCategory> getAllCategories() {
         return categories;
     }
@@ -58,7 +68,6 @@ public class SportCategory{
     }
 
     static void initCategories(){
-
         new SportCategory("Laufen", "km");
         new SportCategory("Liegestütze", "Stück");
         new SportCategory("Wandsitzen", null);
@@ -70,5 +79,13 @@ public class SportCategory{
 
     public boolean hasQuanitityParameter() {
         return unit != null;
+    }
+
+    public void setDurationProgressDiagram(Bitmap durationProgressDiagram) {
+        this.durationProgressDiagram = durationProgressDiagram;
+    }
+
+    public void setQuantityProgressDiagram(Bitmap quantityProgressDiagram) {
+        this.quantityProgressDiagram = quantityProgressDiagram;
     }
 }

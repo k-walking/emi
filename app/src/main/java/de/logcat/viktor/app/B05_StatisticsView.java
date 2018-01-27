@@ -6,9 +6,12 @@ import android.widget.ListView;
 
 public class B05_StatisticsView extends SlideMenu {
     private ListView lv_diagrams;
-    
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Persistence persistence = new Persistence(this);
+        persistence.loadProgressDiagrams();
+        DiagramBuilder.setPersistence(persistence);
         setContentView(R.layout.b05);
         afterCreate();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
