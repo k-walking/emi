@@ -52,12 +52,13 @@ public class DiagramBuilder {
             paint.setTypeface(bold);
 
             canvas.drawText(meassurements.size()  == 0 ?"no data": "not enough data", WIDTH/10, HEIGHT/10, paint);
+            if(quantityNotDuration) category.setQuantityProgressDiagram(bitmap);
+            else category.setDurationProgressDiagram(bitmap);
         } else if(quantityNotDuration? category.getQuantityProgressDiagram() == null: category.getDurationProgressDiagram() == null) {
-
             drawDiagram(category, bitmap, canvas, paint, quantityNotDuration, dp);
         }
 
-        imageView.setImageBitmap(bitmap);
+        imageView.setImageBitmap(quantityNotDuration ?category.getQuantityProgressDiagram(): category.getDurationProgressDiagram());
     }
 
     public static void updateDiagram(SportCategory category, boolean quantityNotDuration) {
@@ -85,7 +86,7 @@ public class DiagramBuilder {
             float yB = (float) ((1-dp[i + 1][1]) * HEIGHT);
             canvas.drawLine(xA, yA, xB, yB, paint);
 
-            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>"+xA+" ,"+yA);
+            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>"+xA+" ,"+yA);
         }
 
         persistence.saveProgressDiagrams(category, bitmap, quantityNotDuration);
