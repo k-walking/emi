@@ -13,7 +13,7 @@ import java.util.Locale;
 
 public class DiagramBuilder {
     private static Persistence persistence;
-    public static final int WIDTH = 180 , HEIGHT = 180;
+    public static final int WIDTH = 300 , HEIGHT = 180;
 
     public static Image buildRunningMap(TimeBindedCoordinate[] coords) {
         return null; // TODO
@@ -74,7 +74,7 @@ public class DiagramBuilder {
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(3);
 
-        drawDiagram(category, bitmap, canvas, paint, quantityNotDuration, dp);
+        if(dp != null) drawDiagram(category, bitmap, canvas, paint, quantityNotDuration, dp);
 
     }
 
@@ -152,7 +152,7 @@ public class DiagramBuilder {
             Meassurement[] execMeassurements = Execution.getAllExecutions().get(i).getAllMeassurements();
             for(int j = 0; j < execMeassurements.length; j++) {
                 Meassurement m = execMeassurements[j];
-                if(m.getTarget().getCategory() == category)
+                if(m.getTarget().getCategory() == category && m.getDuration() > 0)
                     meassurements.add(m);
             }
         }

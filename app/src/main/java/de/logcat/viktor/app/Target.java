@@ -28,6 +28,8 @@ public class Target {
         category = SportCategory.getAllCategories().get(Integer.parseInt(properties[1]));
         duration = Double.parseDouble(properties[2]);
         quantity = Double.parseDouble(properties[3]);
+        System.out.println(">>>>>>>>>>>>>>>>>>>M"+properties[0]);
+
     }
 
     public static Target findTarget(int id){

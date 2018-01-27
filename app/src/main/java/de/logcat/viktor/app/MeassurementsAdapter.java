@@ -76,6 +76,7 @@ public class MeassurementsAdapter extends BaseAdapter {
                             meassurement.getTarget().getCategory().setQuantityProgressDiagram(null);
                             meassurement.getTarget().getCategory().setDurationProgressDiagram(null);
                             DiagramBuilder.updateDiagram(category,true);
+                            DiagramBuilder.updateDiagram(category,false);
 
                         }
                     });

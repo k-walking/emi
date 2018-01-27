@@ -20,10 +20,12 @@ public class ExecutionAdapter extends BaseAdapter {
     private final B03_CalendarView calendarView;
     private Date date;
     private ArrayList<Execution> currentExecutions;
+    private final Persistence persistence;
 
     public ExecutionAdapter(Context context) {
         inflater = LayoutInflater.from(context);
         this.calendarView = (B03_CalendarView) context;
+        persistence = new Persistence(context);
     }
 
     public void setDate(Date date) {
@@ -66,9 +68,15 @@ public class ExecutionAdapter extends BaseAdapter {
         holder.executionDeleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Execution.getAllExecutions().remove(getItem(position));
 
-                calendarView.updateExecutionList();
+                Routine routine = getItem(position).getRoutine();//order!
+                Execution.getAllExecutions().remove(getItem(position));//order!
+                calendarView.updateExecutionList();//order!
+                persistence.saveExecutions();//order!
+                for(int i = 0; i < routine.getAllTargets().size(); i++) {
+                    DiagramBuilder.updateDiagram(routine.getAllTargets().get(i).getCategory(), true);
+                    DiagramBuilder.updateDiagram(routine.getAllTargets().get(i).getCategory(), false);
+                }//order!
             }
         });
         holder.executionPlayBtn.setOnClickListener(new View.OnClickListener() {

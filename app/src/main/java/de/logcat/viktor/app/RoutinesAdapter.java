@@ -48,7 +48,19 @@ public class RoutinesAdapter extends BaseAdapter {
                 holder.routineDeleteBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Routine.getAllRoutines().remove(position);
+                        Routine routine = Routine.getAllRoutines().get(position);//order!
+                        Routine.getAllRoutines().remove(position);//order!
+                        for(int i = 0; i < Execution.getAllExecutions().size(); i++) {
+                            if(Execution.getAllExecutions().get(i).getRoutine() == routine) {
+                                Execution.getAllExecutions().remove(i);
+                                i--;
+                            }
+                        }
+                        for(int i = 0; i < routine.getAllTargets().size(); i++) {
+                            DiagramBuilder.updateDiagram(routine.getAllTargets().get(i).getCategory(), true);
+                            DiagramBuilder.updateDiagram(routine.getAllTargets().get(i).getCategory(), false);
+                        }
+
                         view.updateRoutineList();
                         persistence.saveRoutines();
                         persistence.saveExecutions();

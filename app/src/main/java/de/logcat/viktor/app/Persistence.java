@@ -21,7 +21,7 @@ public class Persistence {
     private static final String FILE_TARGETS = "targets.txt";
     private static final String FILE_EXECUTIONS = "executions.txt";
     private static final String FILE_MEASUREMENTS = "measurements.txt";
-    private static final String DIR_DIAGRAMS = "diagram_";
+    public static final String PREFIX_DIAGRAMS = "diagram_";
 
     public Persistence(Context context){
         this.context = context;
@@ -73,7 +73,7 @@ public class Persistence {
     public void saveProgressDiagrams(SportCategory category, Bitmap progressDiagram, boolean quantityNotDuration) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         progressDiagram.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        writeToFile( DIR_DIAGRAMS+category.getId()+"_"+(quantityNotDuration?"Q": "D") ,stream.toByteArray());
+        writeToFile( PREFIX_DIAGRAMS+category.getId()+"_"+(quantityNotDuration?"Q": "D") ,stream.toByteArray());
     }
 
     // === load ====
@@ -121,8 +121,8 @@ public class Persistence {
     public void loadProgressDiagrams(){
         for(int i = 0; i < SportCategory.getAllCategories().size(); i++) {
             SportCategory category = SportCategory.getAllCategories().get(i);
-            byte[] dataDuration = readBytesFromFile(DIR_DIAGRAMS + category.getId() + "_D");
-            byte[] dataQuantity = readBytesFromFile(DIR_DIAGRAMS + category.getId() + "_Q");
+            byte[] dataDuration = readBytesFromFile(PREFIX_DIAGRAMS + category.getId() + "_D");
+            byte[] dataQuantity = readBytesFromFile(PREFIX_DIAGRAMS + category.getId() + "_Q");
             category.setDurationProgressDiagram(dataDuration == null ? null : BitmapFactory.decodeByteArray(dataDuration, 0, dataDuration.length));
             category.setQuantityProgressDiagram(dataQuantity == null ? null : BitmapFactory.decodeByteArray(dataQuantity, 0, dataQuantity.length));
         }
