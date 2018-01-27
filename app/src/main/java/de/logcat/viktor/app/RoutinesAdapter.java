@@ -51,6 +51,7 @@ public class RoutinesAdapter extends BaseAdapter {
                         Routine.getAllRoutines().remove(position);
                         view.updateRoutineList();
                         persistence.saveRoutines();
+                        persistence.saveExecutions();
                     }
                 });
             }

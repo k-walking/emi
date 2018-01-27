@@ -37,7 +37,8 @@ public class Persistence {
         for(int i = 0; i < Routine.getAllRoutines().size(); i++) {
             Routine routine = Routine.getAllRoutines().get(i);
             for(int j = 0; j < routine.getAllTargets().size(); j++) {
-                data += (j > 0 ? ";" : "")+routine.getAllTargets().get(j).toString();
+                data += (data.length() > 0 ? ";" : "")+routine.getAllTargets().get(j).toString();
+
             }
         }
         writeToFile( FILE_TARGETS, data);
@@ -85,6 +86,7 @@ public class Persistence {
 
     public void loadTargets() {
         String data = readFromFile(FILE_TARGETS);
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>load"+data);
         String[] targetStrings = data.split("\\;");
         for(int i = 0; i < targetStrings.length; i++) if(targetStrings[i].length() > 0) allTargets.add(new Target (targetStrings[i]));
     }
@@ -99,7 +101,15 @@ public class Persistence {
                 allExecutions.add(execution);
             }
         }
+
         return allExecutions;
+    }
+
+    public void loadMeasuremets() {
+        String data = readFromFile(FILE_MEASUREMENTS);
+        String[] measurementStrings = data.split("\\;");
+        for(int i = 0; i < measurementStrings.length; i++) if(measurementStrings[i].length() > 0) new Meassurement (measurementStrings[i]);
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>save"+data);
     }
 
     private void writeToFile(String filename, String data){

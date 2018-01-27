@@ -18,6 +18,9 @@ public class Meassurement {
         target  = Target.findTarget(Integer.parseInt(properties[1]));
         quantity = Double.parseDouble(properties[2]);
         duration = Long.parseLong(properties[3]);
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Measurement"+Integer.parseInt(properties[1]));
+
+        execution.initializeMeasurement(this);
     }
 
     public long getDuration() {

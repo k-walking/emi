@@ -29,7 +29,7 @@ public class Execution {
         id  = Integer.parseInt(properties[0]);
         routine  = Routine.findRoutine(Integer.parseInt(properties[1]));
         executionTime  = new Date(Long.parseLong(properties[2]));
-        //TODO
+        meassurements = new Meassurement[Integer.parseInt(properties[3])];
     }
 
     public static Execution findExecution(int id) {
@@ -75,10 +75,20 @@ public class Execution {
 
     @Override
     public String toString() {
-        return id+","+routine.getId()+","+executionTime.getTime()+",";//TODO
+        return id+","+routine.getId()+","+executionTime.getTime()+","+getAllMeassurements().length;
     }
 
     public static void loadAllExecutions(Context context){
-        allExecutions = new Persistence(context).loadExecutions();
+        Persistence persistence = new Persistence(context);
+        allExecutions = persistence.loadExecutions();
+        persistence.loadMeasuremets();
+    }
+
+    public void initializeMeasurement(Meassurement meassurement) {
+        for(int i = 0; i < meassurements.length; i++)
+            if(meassurements[i] == null) {
+                meassurements[i] = meassurement;
+                return;
+            }
     }
 }
