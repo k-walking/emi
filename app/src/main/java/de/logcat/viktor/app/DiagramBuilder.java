@@ -85,9 +85,16 @@ public class DiagramBuilder {
             float xB = (float) (dp[i + 1][0] * WIDTH);
             float yB = (float) ((1-dp[i + 1][1]) * HEIGHT);
             canvas.drawLine(xA, yA, xB, yB, paint);
-
-            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>"+xA+" ,"+yA);
         }
+
+        paint.setStrokeWidth(1);
+        paint.setStyle(Paint.Style.FILL);
+        paint.setTextSize(Math.min(WIDTH, HEIGHT) / 10);
+        Typeface currentTypeFace = paint.getTypeface();
+        Typeface bold = Typeface.create(currentTypeFace, Typeface.BOLD);
+        paint.setTypeface(bold);
+
+        canvas.drawText(quantityNotDuration ? category.getUnit() : "minutes",10, 10, paint);
 
         persistence.saveProgressDiagrams(category, bitmap, quantityNotDuration);
         if(quantityNotDuration)
