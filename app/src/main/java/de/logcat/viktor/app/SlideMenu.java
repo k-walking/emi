@@ -40,9 +40,9 @@ public abstract class SlideMenu extends AppCompatActivity{
         mDrawerPane = (RelativeLayout) findViewById(R.id.drawerPane);
         //burger menu start
 
-        mNavItems.add(new NavItem("Meine Übungen", "Alle deine Übungen im Überblick", ""));
-        mNavItems.add(new NavItem("Kalender", "Die Übungen im Zeitplan", "ic_input_add"));
-        mNavItems.add(new NavItem("Analyse", "Analysiere deine sportlichen Aktivitäten", ""));
+        mNavItems.add(new NavItem("Meine Übungen", "Alle deine Übungen im Überblick", "android:actionModePasteDrawable"));
+        mNavItems.add(new NavItem("Kalender", "Die Übungen im Zeitplan", "ic_menu_my_calendar"));
+        mNavItems.add(new NavItem("Analyse", "Analysiere deine sportlichen Aktivitäten", "ic_menu_gallery"));
 
 
 
