@@ -1,6 +1,7 @@
 package de.logcat.viktor.app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +14,14 @@ public class RoutinesAdapter extends BaseAdapter {
     private final SlideMenu view;
     private final boolean hasDelete;
     private final Persistence persistence;
+    private final Context context;
 
     public RoutinesAdapter(Context context, boolean hasDelete) {
         inflater = LayoutInflater.from(context);
         this.view = (SlideMenu) context;
         this.hasDelete = hasDelete;
         persistence = new Persistence(context);
+        this.context = context;
     }
 
     @Override
@@ -45,6 +48,7 @@ public class RoutinesAdapter extends BaseAdapter {
             holder.routineNameView = (TextView) convertView.findViewById(R.id.routineName);
             if(hasDelete){
                 holder.routineDeleteBtn = (Button) convertView.findViewById(R.id.btn_delete);
+                holder.routineEditBtn = (Button) convertView.findViewById(R.id.btn_edit);
                 holder.routineDeleteBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -66,6 +70,15 @@ public class RoutinesAdapter extends BaseAdapter {
                         persistence.saveExecutions();
                     }
                 });
+
+                holder.routineEditBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        B02_TargetView.setRoutine(getItem(position));
+                        Intent intent = new Intent(context, B02_TargetView.class);
+                        context.startActivity(intent);
+                    }
+                });
             }
             convertView.setTag(holder);
         } else {
@@ -79,5 +92,6 @@ public class RoutinesAdapter extends BaseAdapter {
     static class ViewHolder {
         TextView routineNameView;
         Button routineDeleteBtn;
+        Button routineEditBtn;
     }
 }

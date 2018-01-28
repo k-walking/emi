@@ -20,7 +20,7 @@ import java.util.List;
 public class B02_TargetView extends Activity {
 
     private List<String> categoryNames;
-    private Routine routine;
+    private static Routine routine;
     private String routineName;
     private final Persistence persistence = new Persistence(this);
 
@@ -33,7 +33,9 @@ public class B02_TargetView extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.b02);
 
-        routine = new Routine();
+        final ListView targetsList = (ListView)findViewById(R.id.lv_targets);
+
+        targetsList.setAdapter(new TargetListAdapter(this, routine));
 
         //get layout resources: save button,  routine name text, category list, targets list
         btn_save = findViewById(R.id.btn_save);
@@ -58,10 +60,12 @@ public class B02_TargetView extends Activity {
 
         btn_save.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-            routineName = ed_routine_name.getText().toString();
-            routine.setName(routineName);
-            persistence.saveRoutines();
-            finish();
+            if(routine.getAllTargets().size() > 0) {
+                routineName = ed_routine_name.getText().toString();
+                routine.setName(routineName);
+                persistence.saveRoutines();
+                finish();
+            }
             }
         });
     }
@@ -70,7 +74,6 @@ public class B02_TargetView extends Activity {
 
         final ListView targetsList = (ListView)findViewById(R.id.lv_targets);
         final Target target = new Target(category);
-        targetsList.setAdapter(new TargetListAdapter(this, routine));
         routine.addTarget(target);
 
         final SimpleDialog.Listener listenerQuantity = new SimpleDialog.Listener() {
@@ -89,9 +92,14 @@ public class B02_TargetView extends Activity {
                     targetsList.invalidateViews();
                 else
                     SimpleDialog.openDialog(B02_TargetView.this, category.getQuantityQuestion(), "5", listenerQuantity);
+                targetsList.invalidateViews();
             }
         };
 
         SimpleDialog.openDialog(this, "Wie lange möchtest du '"+category.getName()+"' ausführen?", "60", listenerDuration);
+    }
+
+    public static void setRoutine(Routine routine) {
+        B02_TargetView.routine = routine;
     }
 }

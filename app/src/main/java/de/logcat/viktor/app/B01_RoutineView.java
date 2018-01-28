@@ -1,8 +1,12 @@
 package de.logcat.viktor.app;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Display;
 import android.view.View;
@@ -16,8 +20,11 @@ public class B01_RoutineView extends SlideMenu {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
+
+        String[] PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        if(ContextCompat.checkSelfPermission(this, PERMISSIONS[0]) != PackageManager.PERMISSION_GRANTED)
+            ActivityCompat.requestPermissions(this, PERMISSIONS, 112);
 
         Routine.loadAllRoutines(this);
         Execution.loadAllExecutions(this);
@@ -39,6 +46,7 @@ public class B01_RoutineView extends SlideMenu {
 
         btn_add.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+                B02_TargetView.setRoutine(new Routine());
                 Intent intent = new Intent(B01_RoutineView.this, B02_TargetView.class);
                 startActivity(intent);
             }

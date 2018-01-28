@@ -1,10 +1,16 @@
 package de.logcat.viktor.app;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,22 +77,14 @@ public class DiagramListAdapter extends BaseAdapter {
         holder.shareQuantityDiagram.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                File file = statisticsView.getFileStreamPath("share.png");
-                System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><file"+file.getAbsolutePath());
                 Intent share = new Intent(Intent.ACTION_SEND);
                 share.setType("image/png");
                 Bitmap bmp = getItem(position).getQuantityProgressDiagram();
-                FileOutputStream out = null;
-                try {
-                    out = new FileOutputStream(file);
-                    bmp.compress(Bitmap.CompressFormat.PNG, 100, out);
-                    out.close();
-                } catch(Exception e) {
-                    e.printStackTrace();
-                }
-                share.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+
+                share.putExtra(Intent.EXTRA_STREAM, Uri.parse(MediaStore.Images.Media.insertImage(statisticsView.getContentResolver(), bmp, "title", null)));
                 share.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 statisticsView.startActivity(Intent.createChooser(share,"Share via"));
+
             }
         });
 

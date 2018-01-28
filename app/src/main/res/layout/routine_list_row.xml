@@ -16,13 +16,22 @@
 
     <Button
         android:id="@+id/btn_delete"
-        android:layout_width="46dp"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:background="@android:drawable/ic_delete"
         android:backgroundTint="@color/colorPrimaryGreen"
         android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/btn_edit"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/routineName"
+        android:layout_marginEnd="68dp"
+        android:background="@android:drawable/ic_menu_edit" />
 
 </RelativeLayout>

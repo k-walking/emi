@@ -1,6 +1,9 @@
 package de.logcat.viktor.app;
 
 import android.content.Context;
+import android.content.res.AssetFileDescriptor;
+import android.media.MediaPlayer;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,11 +97,20 @@ public class MeassurementsAdapter extends BaseAdapter {
 
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         Date date = new Date(1970,0,1);
+        Date dateTarget = new Date(date.getTime()+(long) (meassurement.getTarget().getDuration()*60000));
         date = new Date(date.getTime()+meassurement.getDuration()+(meassurement.getTimeStarted() == 0 ? 0 : System.currentTimeMillis() - meassurement.getTimeStarted()));
 
         holder.categoryNameView.setText(category.getName());
-        holder.quantityView.setText(category.hasQuanitityParameter()?getItem(position).getQuantity()+" "+category.getUnit()+" ("+quantityProgress +"%)": "");
-        holder.durationView.setText("("+durationProgress +"%) "+sdf.format(date));
+        holder.quantityView.setText(category.hasQuanitityParameter()?getItem(position).getQuantity()+"/"+getItem(position).getTarget().getQuantity()+" "+category.getUnit()+" ("+quantityProgress +"%)": "");
+        holder.durationView.setText("("+durationProgress +"%) "+sdf.format(date)+"/"+sdf.format(dateTarget));
+
+        long overTime = meassurement.getDuration()+System.currentTimeMillis() - meassurement.getTimeStarted() - (long) (meassurement.getTarget().getDuration()*60000);
+        System.out.println(">>>>>>>>>>>>>>>>>>>>"+overTime);
+        if(overTime > 0 && overTime < 1000){
+            MediaPlayer mp = MediaPlayer.create(executionView, Settings.System.DEFAULT_RINGTONE_URI);
+            mp.start();
+        }
+
         return convertView;
     }
 

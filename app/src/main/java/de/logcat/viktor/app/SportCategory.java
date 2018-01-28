@@ -69,8 +69,19 @@ public class SportCategory{
 
     static void initCategories(){
         new SportCategory("Laufen", "km");
+        new SportCategory("Fahrradfahren", "km");
+        new SportCategory("Schwimmen", "Meter");
         new SportCategory("Liegestütze", "Stück");
+        new SportCategory("Bauchaufzüge", "Stück");
+        new SportCategory("Klimmzüge", "Stück");
+        new SportCategory("Kurzhantel", "Stück");
+        new SportCategory("Langhantel", "Stück");
+        new SportCategory("Seilspringen", "Stück");
+        new SportCategory("Kniebeuge", "Stück");
+        new SportCategory("Hampelmänner", "Stück");
+        new SportCategory("Hockstrecksprünge", "Stück");
         new SportCategory("Wandsitzen", null);
+        new SportCategory("Planke", null);
     }
 
     public String getQuantityQuestion() {
