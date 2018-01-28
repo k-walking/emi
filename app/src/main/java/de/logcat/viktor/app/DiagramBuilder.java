@@ -91,10 +91,10 @@ public class DiagramBuilder {
         paint.setStyle(Paint.Style.FILL);
         paint.setTextSize(Math.min(WIDTH, HEIGHT) / 10);
         Typeface currentTypeFace = paint.getTypeface();
-        Typeface bold = Typeface.create(currentTypeFace, Typeface.BOLD);
+        Typeface bold = Typeface.create(currentTypeFace, Typeface.NORMAL);
         paint.setTypeface(bold);
 
-        canvas.drawText(quantityNotDuration ? category.getUnit() : "minutes",10, 10, paint);
+        canvas.drawText(quantityNotDuration ? category.getUnit() : "minutes",10, 16, paint);
 
         persistence.saveProgressDiagrams(category, bitmap, quantityNotDuration);
         if(quantityNotDuration)
