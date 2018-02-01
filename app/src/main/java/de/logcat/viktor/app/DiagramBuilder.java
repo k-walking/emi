@@ -94,7 +94,7 @@ public class DiagramBuilder {
         Typeface bold = Typeface.create(currentTypeFace, Typeface.NORMAL);
         paint.setTypeface(bold);
 
-        canvas.drawText(quantityNotDuration ? category.getUnit() : "minutes",10, 16, paint);
+        //canvas.drawText(quantityNotDuration ? category.getUnit() : "minutes",10, 16, paint);
 
         persistence.saveProgressDiagrams(category, bitmap, quantityNotDuration);
         if(quantityNotDuration)

@@ -105,9 +105,8 @@ public class MeassurementsAdapter extends BaseAdapter {
         holder.durationView.setText("("+durationProgress +"%) "+sdf.format(date)+"/"+sdf.format(dateTarget));
 
         long overTime = meassurement.getDuration()+System.currentTimeMillis() - meassurement.getTimeStarted() - (long) (meassurement.getTarget().getDuration()*60000);
-        System.out.println(">>>>>>>>>>>>>>>>>>>>"+overTime);
         if(overTime > 0 && overTime < 1000){
-            MediaPlayer mp = MediaPlayer.create(executionView, Settings.System.DEFAULT_RINGTONE_URI);
+            MediaPlayer mp = MediaPlayer.create(executionView, Settings.System.DEFAULT_NOTIFICATION_URI);
             mp.start();
         }
 

@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout_main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="60dp"
     android:orientation="horizontal"
     android:padding="5dip">
 
@@ -10,8 +10,11 @@
         android:id="@+id/routineName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="dfsf"
+        android:layout_centerVertical="true"
+        android:text=""
         android:textStyle="bold"
+        android:layout_marginLeft="20dp"
+        android:textSize="20sp"
         android:typeface="sans" />
 
     <Button
@@ -23,15 +26,17 @@
         android:layout_alignParentTop="true"
         android:background="@android:drawable/ic_delete"
         android:backgroundTint="@color/colorPrimaryGreen"
-        android:textSize="16sp" />
+        android:layout_centerVertical="true" />
 
     <Button
         android:id="@+id/btn_edit"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignBottom="@+id/btn_delete"
         android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/routineName"
-        android:layout_marginEnd="68dp"
-        android:background="@android:drawable/ic_menu_edit" />
+        android:layout_marginEnd="80dp"
+        android:layout_centerVertical="true"
+        android:background="@android:drawable/ic_menu_edit"
+        android:backgroundTint="@color/colorPrimaryGreen" />
 
 </RelativeLayout>

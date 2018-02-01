@@ -55,7 +55,7 @@ public class DrawerListAdapter extends BaseAdapter {
         ImageView iconView = (ImageView) view.findViewById(R.id.icon);
 
         Resources res = mNavItems.get(position).res;
-        int id = res.getIdentifier("android:drawable/" + mNavItems.get(position).iconResource, null, null);
+        int id = res.getIdentifier("drawable/" + mNavItems.get(position).iconResource, "drawable", mContext.getPackageName());
 
         titleView.setText(mNavItems.get(position).mTitle);
         iconView.setImageResource(id);

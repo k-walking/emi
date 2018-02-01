@@ -62,7 +62,6 @@ public class DiagramListAdapter extends BaseAdapter {
             holder.shareDurationDiagram = (Button) convertView.findViewById(R.id.btn_share_duration);
             holder.shareQuantityDiagram = (Button) convertView.findViewById(R.id.btn_share_quantity);
 
-
             convertView.setTag(holder);
         } else {
             holder = (DiagramListAdapter.ViewHolder) convertView.getTag();
@@ -84,7 +83,19 @@ public class DiagramListAdapter extends BaseAdapter {
                 share.putExtra(Intent.EXTRA_STREAM, Uri.parse(MediaStore.Images.Media.insertImage(statisticsView.getContentResolver(), bmp, "title", null)));
                 share.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 statisticsView.startActivity(Intent.createChooser(share,"Share via"));
+            }
+        });
 
+        holder.shareDurationDiagram.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent share = new Intent(Intent.ACTION_SEND);
+                share.setType("image/png");
+                Bitmap bmp = getItem(position).getDurationProgressDiagram();
+
+                share.putExtra(Intent.EXTRA_STREAM, Uri.parse(MediaStore.Images.Media.insertImage(statisticsView.getContentResolver(), bmp, "title", null)));
+                share.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                statisticsView.startActivity(Intent.createChooser(share,"Share via"));
             }
         });
 

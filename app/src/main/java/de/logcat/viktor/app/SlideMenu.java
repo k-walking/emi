@@ -4,7 +4,11 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +16,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -40,11 +45,9 @@ public abstract class SlideMenu extends AppCompatActivity{
         mDrawerPane = (RelativeLayout) findViewById(R.id.drawerPane);
         //burger menu start
 
-        mNavItems.add(new NavItem("Meine Übungen", "Alle deine Übungen im Überblick", "android:actionModePasteDrawable"));
-        mNavItems.add(new NavItem("Kalender", "Die Übungen im Zeitplan", "ic_menu_my_calendar"));
-        mNavItems.add(new NavItem("Analyse", "Analysiere deine sportlichen Aktivitäten", "ic_menu_gallery"));
-
-
+        mNavItems.add(new NavItem("Meine Übungen", "Alle deine Übungen im Überblick", "ic_format_list_bulleted_black_24dp"));
+        mNavItems.add(new NavItem("Kalender", "Die Übungen im Zeitplan", "ic_date_range_black_24dp"));
+        mNavItems.add(new NavItem("Analyse", "Analysiere deine sportlichen Aktivitäten", "ic_trending_up_black_24dp"));
 
         DrawerListAdapter adapter = new DrawerListAdapter(this, mNavItems);
         mDrawerList.setAdapter(adapter);
@@ -88,7 +91,6 @@ public abstract class SlideMenu extends AppCompatActivity{
         };
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-
     }
 
     //nav item

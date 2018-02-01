@@ -12,10 +12,22 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/tv_stat_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:textSize="25dp"
+            android:layout_marginTop="20dp"
+            android:text="Überprüfe deinen Fortschritt" />
+
         <ListView
             android:id="@+id/lv_diagrams"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tv_stat_header" />
+
     </RelativeLayout>
 
     <!-- The navigation drawer -->
@@ -30,16 +42,16 @@
             android:id="@+id/appNameBox"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:background="@color/colorPrimary"
+            android:background="@color/colorPrimaryGreen"
             android:padding="8dp" >
 
             <ImageView
                 android:id="@+id/appIcon"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_centerHorizontal="true"
-                android:src="@android:drawable/ic_delete"
-                android:layout_marginTop="15dp" />
+                android:background="@color/colorPrimaryGreen"
+                android:src="@drawable/ic_fitness_center_black_24dp" />
 
         </RelativeLayout>
 
